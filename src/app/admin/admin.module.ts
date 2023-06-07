@@ -20,14 +20,32 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
-import { CrudComponent } from './crud/crud.component';
-import { ClientesComponent } from './clientes/clientes.component';
+
+
+import { CrudComponent } from './components/crud/crud.component';
+import { ClientesComponent } from './components/clientes/clientes.component';
+import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { ServiciosComponent } from './components/servicios/servicios.component';
+import { MaterialesComponent } from './components/materiales/materiales.component';
+import { EmpleadosComponent } from './components/empleados/empleados.component';
+import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
+import { CotizacionesComponent } from './components/cotizaciones/cotizaciones.component';
+import { ObrasComponent } from './components/obras/obras.component';
 
 
 @NgModule({
   declarations: [
     ClientesComponent,
-    CrudComponent
+    CrudComponent,
+    ConfiguracionComponent,
+    UsuariosComponent,
+    ServiciosComponent,
+    MaterialesComponent,
+    EmpleadosComponent,
+    SolicitudesComponent,
+    CotizacionesComponent,
+    ObrasComponent
   ],
   imports: [
     CommonModule,
@@ -48,8 +66,11 @@ import { ClientesComponent } from './clientes/clientes.component';
     DialogModule,
     RouterModule.forChild([
       { path: 'clientes', component: ClientesComponent },
-      { path: 'crud', component: CrudComponent }
+      { path: 'servicios', component: ServiciosComponent },
+      { path: 'materiales', component: MaterialesComponent },
+      { path: 'crud', component: CrudComponent },
     ])
   ]
 })
 export class AdminModule { }
+

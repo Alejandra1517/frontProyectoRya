@@ -1,0 +1,472 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+      <p-toast></p-toast>
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button
+              pButton
+              pRipple
+              label="Registrar Servicio"
+              icon="pi pi-plus"
+              class="p-button-success mr-2"
+              (click)="openNew()"
+            ></button>
+            <button
+              pButton
+              pRipple
+              label="Eliminar"
+              icon="pi pi-trash"
+              class="p-button-danger"
+              (click)="deleteSelectedServicios()"
+              [disabled]="!selectedServicios || !selectedServicios.length"
+            ></button>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
+          <button
+            pButton
+            pRipple
+            label="Descargar informe"
+            icon="pi pi-upload"
+            class="p-button-help"
+          ></button>
+          <!--(click)="dt.exportCSV()-->
+        </ng-template>
+      </p-toolbar>
+
+      <p-table
+        #dt
+        [value]="Servicios"
+        [columns]="cols"
+        responsiveLayout="scroll"
+        [rows]="10"
+        [globalFilterFields]="['nombre_servicio', 'categoria']"
+        [paginator]="true"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+        [(selection)]="selectedServicios"
+        selectionMode="multiple"
+        [rowHover]="true"
+        dataKey="id"
+      >
+        <ng-template pTemplate="caption">
+          <div
+            class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
+          >
+            <h5 class="m-0">Servicios Registrados</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="onGlobalFilter(dt, $event)"
+                placeholder="Buscar ..."
+                class="w-full sm:w-auto"
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th>Nombre servicio</th>
+            <th>Imagen</th>
+            <th>Descripción</th>
+            <th pSortableColumn="categoria">
+              Categoría <p-sortIcon field="categoria"></p-sortIcon>
+            </th>
+            <th>Valor unitario</th>
+            <th pSortableColumn="estado">
+              Estado <p-sortIcon field="Estado"></p-sortIcon>
+            </th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Servicio>
+          <tr>
+            <td>
+              <p-tableCheckbox
+                [value]="Servicio"
+                binary="true"
+              ></p-tableCheckbox>
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">nombre_servicio</span>
+              {{ Servicio.nombre_servicio }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">Image</span>
+              <img
+                [src]="'assets/demo/images/product/' + Servicio.imagen"
+                width="100"
+                class="shadow-4"
+              />
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">Descripción</span>
+              {{ Servicio.descripcion }}
+            </td>
+
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">Categoria</span>
+              <span
+                
+              >
+                <ng-container [ngSwitch]="Servicio.categoria">
+                  <ng-container *ngSwitchCase="0"> Obra blanca </ng-container>
+                  <ng-container *ngSwitchCase="1"> Obra negra </ng-container>
+                  <ng-container *ngSwitchCase="2"> Obra gris </ng-container>
+                </ng-container>
+              </span>
+            </td>
+
+            <td style="width: 14%; min-width: 8rem">
+              <span class="p-column-title">Valor unitario</span>
+              {{ Servicio.valor_unitario | number : "1.0-0" }}
+            </td>
+            <td style="width: 14%; min-width: 10rem">
+              <span class="p-column-title">Estado</span>
+              <span [class]="'Servicio-badge status-' + (Servicio.Estado ? Servicio.Estado.toString().toLowerCase() : '')">{{ Servicio.estado === 1 ? "Activo" : "Inactivo"}}</span>
+            </td>
+            <td>
+              <div class="flex">
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-success mr-2"
+                  (click)="editServicio(Servicio)"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  (click)="deleteServicio(Servicio)"
+                ></button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!--Guardar Servicio-->
+    <p-dialog
+      [(visible)]="ServicioDialog"
+      [style]="{ width: '480px', height: '700' }"
+      header="Servicio Detalle"
+      [modal]="true"
+      class="p-fluid"
+    >
+      <ng-template pTemplate="content">
+        <form [formGroup]="ServiciosForm">
+          <div class="formgroup-inline mb-3">
+            <div class="field">
+              <input
+                type="text"
+                placeholder="Nombre Servicio"
+                pInputText
+                id="nombre_servicio"
+                formControlName="nombre_servicio"
+                required
+                autofocus
+                [ngClass]="{
+                  'p-invalid':
+                    submitted && ServiciosForm.get('nombre_servicio')?.invalid
+                }"
+              />
+              <div
+                *ngIf="
+                  submitted && ServiciosForm.get('nombre_servicio')?.invalid
+                "
+                class="p-error"
+              >
+                Este campo es obligatorio.
+              </div>
+            </div>
+
+            <div class="field">
+              <p-dropdown
+                formControlName="categoria"
+                id="categoria"
+                [options]="categorias"
+                placeholder="Seleccionar categoría"
+                [ngClass]="{
+                  'p-invalid':
+                    submitted && ServiciosForm.get('categoria')?.invalid
+                }"
+              ></p-dropdown>
+              <div
+                *ngIf="submitted && ServiciosForm.get('categoria')?.invalid"
+                class="p-error"
+              >
+                Este campo es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <div class="formgroup-inline mb-3">
+            <div class="field">
+                <p-inputNumber
+                placeholder="Valor unitario"
+                id="valor_unitario"
+                formControlName="valor_unitario"
+                mode="currency"
+                currency="COP"
+                locale="es-CO"
+                [currencyDisplay]="'symbol'"
+              ></p-inputNumber>
+              
+              <div
+                *ngIf="
+                  submitted && ServiciosForm.get('valor_unitario')?.invalid
+                "
+                class="p-error"
+              >
+                Este campo es obligatorio.
+              </div>
+            </div>
+
+            <div class="field">
+              <p-dropdown
+                formControlName="estado"
+                id="estado"
+                [options]="statuses"
+                placeholder="Seleccionar estado"
+                [ngClass]="{
+                  'p-invalid': submitted && ServiciosForm.get('estado')?.invalid
+                }"
+              ></p-dropdown>
+              <div
+                *ngIf="submitted && ServiciosForm.get('estado')?.invalid"
+                class="p-error"
+              >
+                Este campo es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <textarea
+              id="descripcion"
+              placeholder="Descripción"
+              pInputTextarea
+              formControlName="descripcion"
+              rows="3"
+              cols="20"
+            ></textarea>
+          </div>
+        </form>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="p-dialog-footer">
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            class="p-button-text"
+            (click)="hideDialog()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            label="Guardar"
+            icon="pi pi-check"
+            class="p-button-text"
+            (click)="saveServicio()"
+          ></button>
+        </div>
+      </ng-template>
+    </p-dialog>
+
+    <!--Editar Servicio-->
+    <p-dialog
+      [(visible)]="EditarServicioDialog"
+      [style]="{ width: '480px' }"
+      header="Servicio Detalle"
+      [modal]="true"
+      class="p-fluid"
+    >
+      <ng-template pTemplate="content">
+        <form [formGroup]="ServiciosForm">
+          <div class="formgroup-inline">
+            <div class="field">
+              <input
+                type="text"
+                placeholder="Nombre Servicio"
+                pInputText
+                id="nombre_servicio"
+                formControlName="nombre_servicio"
+                required
+                autofocus
+                [ngClass]="{
+                  'p-invalid':
+                    submitted && ServiciosForm.get('nombre_servicio')?.invalid
+                }"
+              />
+              <div
+                *ngIf="
+                  submitted && ServiciosForm.get('nombre_servicio')?.invalid
+                "
+                class="p-error"
+              >
+                Este campo es obligatorio.
+              </div>
+            </div>
+            <div class="field">
+              <p-dropdown
+                formControlName="categoria"
+                id="categoria"
+                [options]="categorias"
+                placeholder="Seleccionar categoría"
+                [ngClass]="{
+                  'p-invalid':
+                    submitted && ServiciosForm.get('categoria')?.invalid
+                }"
+              ></p-dropdown>
+              <div
+                *ngIf="submitted && ServiciosForm.get('categoria')?.invalid"
+                class="p-error"
+              >
+                Este campo es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <div class="formgroup-inline">
+            <div class="field">
+                <p-inputNumber
+                placeholder="Valor unitario"
+                id="valor_unitario"
+                formControlName="valor_unitario"
+                mode="currency"
+                currency="COP"
+                locale="es-CO"
+                [currencyDisplay]="'symbol'"
+              ></p-inputNumber>
+              
+              <div
+                *ngIf="
+                  submitted && ServiciosForm.get('valor_unitario')?.invalid
+                "
+                class="p-error"
+              >
+                Este campo es obligatorio.
+              </div>
+            </div>
+
+            <div class="field">
+              <p-dropdown
+                formControlName="estado"
+                id="estado"
+                [options]="statuses"
+                placeholder="Seleccionar estado"
+              ></p-dropdown>
+            </div>
+          </div>
+
+          <div class="field">
+            <textarea
+              id="descripcion"
+              placeholder="Descripción"
+              pInputTextarea
+              formControlName="descripcion"
+              rows="3"
+              cols="20"
+            ></textarea>
+          </div>
+        </form>
+      </ng-template>
+      <ng-template pTemplate="footer">
+        <div class="p-dialog-footer">
+          <button
+            pButton
+            pRipple
+            label="Cancelar"
+            icon="pi pi-times"
+            class="p-button-text"
+            (click)="hideDialog()"
+          ></button>
+          <button
+            pButton
+            pRipple
+            label="Guardar"
+            icon="pi pi-check"
+            class="p-button-text"
+            [disabled]="ServiciosForm.invalid"
+            (click)="updateServicio()"
+          ></button>
+        </div>
+      </ng-template>
+    </p-dialog>
+
+    <p-dialog
+      [(visible)]="deleteServicioDialog"
+      header="Confirmación"
+      [modal]="true"
+      [style]="{ width: '450px' }"
+    >
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>¿Estás seguro de que quieres eliminarlo?</span>
+      </div>
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-times"
+          class="p-button-text"
+          label="No"
+          (click)="deleteServicioDialog = false"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-check"
+          class="p-button-text"
+          label="Si"
+          (click)="confirmDelete()"
+        ></button>
+      </ng-template>
+    </p-dialog>
+
+    <p-dialog
+      [(visible)]="deleteServiciosDialog"
+      header="Confirmación"
+      [modal]="true"
+      [style]="{ width: '450px' }"
+    >
+      <div class="flex align-items-center justify-content-center">
+        <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+        <span>¿Estás seguro de eliminar los Servicios seleccionados?</span>
+      </div>
+      <ng-template pTemplate="footer">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-times"
+          class="p-button-text"
+          label="No"
+          (click)="deleteServiciosDialog = false"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-check"
+          class="p-button-text"
+          label="Si"
+          (click)="confirmDeleteSelected()"
+        ></button>
+      </ng-template>
+    </p-dialog>
+  </div>
+</div>

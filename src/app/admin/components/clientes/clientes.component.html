@@ -35,10 +35,10 @@
                     <th style="width: 3rem">
                       <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                     </th>
-                    <th pSortableColumn="nombre_cliente">Nombre Cliente</th>
-                    <th pSortableColumn="documento">Documento</th>
-                    <th pSortableColumn="telefono">Télefono</th>
-                    <th pSortableColumn="direccion">Dirección</th>
+                    <th>Nombre Cliente</th>
+                    <th>Documento</th>
+                    <th>Télefono</th>
+                    <th>Dirección</th>
                     <th pSortableColumn="estado">Estado <p-sortIcon field="Estado"></p-sortIcon></th>
                     <th></th>
                   </tr>
@@ -87,7 +87,7 @@
 
 
           <!--Guardar cliente-->
-        <p-dialog [(visible)]="ClienteDialog" [style]="{width: '480px', height: '360px'}" header="Cliente Detalle" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="ClienteDialog" [style]="{width: '480px'}" header="Cliente Detalle" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
               <form [formGroup]="clientesForm">
           

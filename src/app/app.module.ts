@@ -7,6 +7,8 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { ProductService } from './admin/service/product.service';
 import { ClienteService } from './admin/service/cliente.service';
 
+import { ServicioServiceService } from './admin/service/servicio.service';
+
 @NgModule({
     declarations: [
         AppComponent
@@ -17,7 +19,7 @@ import { ClienteService } from './admin/service/cliente.service';
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        ProductService, ClienteService
+        ProductService, ClienteService, ServicioServiceService
     ],
     bootstrap: [AppComponent]
 })
