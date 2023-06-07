@@ -38,11 +38,32 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ['/admin/servicios']
                     },
 
+                    {
+                        label: 'Empleados',
+                        icon: 'pi pi-cog',
+                        routerLink: ['/admin/empleados']
+                    },
 
                     {
                         label: 'Clientes',
                         icon: 'pi pi-users',
                         routerLink: ['/admin/clientes']
+                    },
+
+                    {
+                        label: 'Solicitudes',
+                        icon: 'pi pi-truck',
+                        routerLink: ['/admin/solicitudes']
+                    },
+                    {
+                        label: 'Cotizaciones',
+                        icon: 'pi pi-file',
+                        routerLink: ['/admin/cotizaciones']
+                    },
+                    {
+                        label: 'Obras',
+                        icon: 'pi pi-home',
+                        routerLink: ['/admin/obras']
                     }
                  
                 ]

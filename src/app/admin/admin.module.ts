@@ -68,6 +68,10 @@ import { ObrasComponent } from './components/obras/obras.component';
       { path: 'clientes', component: ClientesComponent },
       { path: 'servicios', component: ServiciosComponent },
       { path: 'materiales', component: MaterialesComponent },
+      { path: 'empleados', component: EmpleadosComponent },
+      { path: 'solicitudes', component: SolicitudesComponent },
+      { path: 'cotizaciones', component: CotizacionesComponent },
+      { path: 'obras', component: ObrasComponent },
       { path: 'crud', component: CrudComponent },
     ])
   ]
