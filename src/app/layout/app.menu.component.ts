@@ -26,6 +26,18 @@ export class AppMenuComponent implements OnInit {
                     //     routerLink: ['/admin/crud']
                     // },
 
+                    // {
+                    //     label: 'Configuración',
+                    //     icon: 'pi pi-cog',
+                    //     routerLink: ['/admin/materiales']
+                    // },
+
+                    {
+                        label: 'Usuarios',
+                        icon: 'pi pi-users',
+                        routerLink: ['/admin/usarios']
+                    },
+
                     {
                         label: 'Materiales',
                         icon: 'pi pi-wrench',
@@ -64,10 +76,19 @@ export class AppMenuComponent implements OnInit {
                         label: 'Obras',
                         icon: 'pi pi-home',
                         routerLink: ['/admin/obras']
+                    },
+                    {
+                        label: 'Cerrar sesión',
+                        icon: 'pi pi-sign-out',
+                        routerLink: ['/auth/login']
                     }
                  
                 ]
             },
+
+            {
+                
+            }
 
         ];
     }

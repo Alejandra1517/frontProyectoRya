@@ -1,0 +1,48 @@
+<div class="p-grid p-justify-center" style="margin-top: 20px;">
+    <div class="p-col-6">
+      <div class="p-d-flex p-flex-column p-ai-center">
+        <img src="../../../assets/icon.png" width="100" height="100" alt="Icono">
+        <h1 class="text-center">Regístrate aquí</h1>
+      </div>
+  
+      <form (ngSubmit)="formSubmit()">
+        <div class="p-field">
+          <label for="username">Nombre de usuario</label>
+          <input id="username" [(ngModel)]="user.username" name="username" type="text" pInputText placeholder="Digite su nombre de usuario" required>
+          <small>El nombre de usuario debe ser único</small>
+        </div>
+  
+        <div class="p-field">
+          <label for="password">Contraseña</label>
+          <input id="password" [(ngModel)]="user.password" name="password" type="password" pPassword placeholder="Digite su contraseña" required>
+        </div>
+  
+        <div class="p-field">
+          <label for="nombre">Nombre</label>
+          <input id="nombre" [(ngModel)]="user.nombre" name="nombre" type="text" pInputText placeholder="Digite su nombre" required>
+        </div>
+  
+        <div class="p-field">
+          <label for="apellido">Apellido</label>
+          <input id="apellido" [(ngModel)]="user.apellido" name="apellido" type="text" pInputText placeholder="Digite su apellido" required>
+        </div>
+  
+        <div class="p-field">
+          <label for="email">Email</label>
+          <input id="email" [(ngModel)]="user.email" name="email" type="email" pInputText placeholder="Digite su email" required>
+        </div>
+  
+        <div class="p-field">
+          <label for="telefono">Teléfono</label>
+          <input id="telefono" [(ngModel)]="user.telefono" name="telefono" type="text" pInputText placeholder="Digite su teléfono" required>
+        </div>
+  
+        <div class="p-d-flex p-jc-center">
+          <button pButton type="submit" label="Registrar" class="p-mr-2" icon="pi pi-check" style="margin-top: 10px;"></button>
+          <button pButton type="reset" label="Limpiar" class="p-button-secondary" icon="pi pi-refresh" style="margin-top: 10px;"></button>
+        </div>
+      </form>
+      <br><br><br>
+    </div>
+  </div>
+  

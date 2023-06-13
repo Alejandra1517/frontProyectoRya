@@ -32,6 +32,7 @@ import { EmpleadosComponent } from './components/empleados/empleados.component';
 import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 import { CotizacionesComponent } from './components/cotizaciones/cotizaciones.component';
 import { ObrasComponent } from './components/obras/obras.component';
+import { RolesComponent } from './components/roles/roles.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { ObrasComponent } from './components/obras/obras.component';
     EmpleadosComponent,
     SolicitudesComponent,
     CotizacionesComponent,
-    ObrasComponent
+    ObrasComponent,
+    RolesComponent
   ],
   imports: [
     CommonModule,

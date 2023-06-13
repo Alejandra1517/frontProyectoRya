@@ -1,1 +1,194 @@
-<p>usuarios works!</p>
+<div class="grid">
+    <div class="col-12">
+
+
+
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Registrar cliente" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedUsuarios()" [disabled]="!selectedUsuarios || !selectedUsuarios.length"></button>
+                    </div>
+                </ng-template>
+
+                <ng-template pTemplate="right">
+                    <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
+                    <button pButton pRipple label="Descargar informe" icon="pi pi-upload" class="p-button-help"></button> <!--(click)="dt.exportCSV()-->
+                </ng-template>
+            </p-toolbar>
+        
+
+            <p-table #dt [value]="Usuarios" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['username', 'password', 'direccion', 'telefono']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" [(selection)]="selectedUsuarios" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                    <h5 class="m-0">Usuarios Registrados</h5>
+                    <span class="block mt-2 md:mt-0 p-input-icon-left">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar ..."  class="w-full sm:w-auto"/>
+                    </span>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width: 3rem">
+                      <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th>Usuario</th>
+                    <th>Contraseña</th>
+                    <th pSortableColumn="estado">Estado <p-sortIcon field="Estado"></p-sortIcon></th>
+                    <th></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Usuario>
+                  <tr>
+                    <td>
+                      <p-tableCheckbox [value]="Usuario" binary="true"></p-tableCheckbox>
+                    </td>
+                    <td style="width:14%; min-width:10rem;">
+                      <span class="p-column-title">username</span>
+                      {{Usuario.username}}
+                    </td>
+                    <td style="width:14%; min-width:10rem;">
+                      <span class="p-column-title">Documento</span>
+                      {{Usuario.password}}
+                    </td>
+                    <td style="width:14%; min-width: 10rem;">
+                      <span class="p-column-title">Estado</span>
+                      <span [class]="'Usuario-badge status-' + (Usuario.Estado ? Usuario.Estado.toLowerCase() : '')">{{ Usuario.estado === 1 ? "Activo" : "Inactivo"}}</span>
+                    </td>
+                    <td>
+                      <div class="flex">
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editUsuario(Usuario)"></button>
+                        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteUsuario(Usuario)"></button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              
+
+        </div>
+
+
+          <!--Guardar cliente-->
+        <p-dialog [(visible)]="UsuarioDialog" [style]="{width: '480px'}" header="Usuario Detalle" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+              <form [formGroup]="usuariosForm">
+          
+
+                <div class="formgroup-inline">
+
+                    <div class="field">
+                      <input type="text" placeholder="Nombre de usuario" pInputText id="username" formControlName="username" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('username')?.invalid}" />
+                      <div *ngIf="submitted && usuariosForm.get('username')?.invalid" class="p-error">
+                        Este campo es obligatorio.
+                      </div>
+                    </div>
+                    
+                    <div class="field">
+                      <input type="text" placeholder="Contraseña" pInputText id="password" formControlName="password" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('password')?.invalid}" />
+                      <div *ngIf="submitted && usuariosForm.get('password')?.invalid" class="p-error">
+                        Este campo es obligatorio.
+                      </div>
+                    </div>
+                
+                </div>
+
+                <div class="formgroup-inline">
+
+                
+                <div class="field">
+                    <p-dropdown formControlName="estado" id="estado" [options]="statuses" placeholder="Seleccionar estado"></p-dropdown>
+                  </div>
+
+             
+            </div>
+
+         
+
+              </form>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <div class="p-dialog-footer">
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" [disabled]="usuariosForm.invalid" (click)="saveUsuario()"></button>
+              </div>
+            </ng-template>
+          </p-dialog>
+          
+    
+
+          <!--Editar cliente-->
+          <p-dialog [(visible)]="EditarUsuarioDialog" [style]="{width: '480px'}" header="Usuario Detalle" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+              <form [formGroup]="usuariosForm">
+
+                <div class="formgroup-inline">
+
+                <div class="field">
+                  <input type="text" placeholder="Nombre cliente" pInputText id="username" formControlName="username" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('username')?.invalid} "  />
+                  <div *ngIf="submitted && usuariosForm.get('username')?.invalid" class="p-error">
+                    Este campo es obligatorio.
+                  </div>
+                </div>
+
+                <div class="field">
+                  <input type="text" placeholder="Contraseña" pInputText id="password" formControlName="password" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('password')?.invalid}" />
+                  <div *ngIf="submitted && usuariosForm.get('password')?.invalid" class="p-error">
+                    Este campo es obligatorio.
+                  </div>
+                </div>
+
+            </div>
+
+            <div class="formgroup-inline">
+
+                <div class="field">
+                    <p-dropdown formControlName="estado" id="estado" [options]="statuses" placeholder="Seleccionar estado"></p-dropdown>
+                </div>
+           
+
+            </div>
+
+
+              </form>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <div class="p-dialog-footer">
+                <button pButton pRipple label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Guardar" icon="pi pi-check" class="p-button-text" [disabled]="usuariosForm.invalid" (click)="updateUsuario()"></button>
+              </div>
+            </ng-template>
+          </p-dialog>
+
+
+
+        <p-dialog [(visible)]="deleteUsuarioDialog" header="Confirmación" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>¿Estás seguro de que quieres eliminarlo?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteUsuarioDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+
+
+        <p-dialog [(visible)]="deleteUsuariosDialog" header="Confirmación" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>¿Estás seguro de eliminar los usuarios seleccionados?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteUsuariosDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Si" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog>
+
+      
+    </div>
+</div>
