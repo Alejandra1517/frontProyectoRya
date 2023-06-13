@@ -8,7 +8,7 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="Registrar cliente" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Registrar usuario" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
                         <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedUsuarios()" [disabled]="!selectedUsuarios || !selectedUsuarios.length"></button>
                     </div>
                 </ng-template>
@@ -72,7 +72,7 @@
         </div>
 
 
-          <!--Guardar cliente-->
+          <!--Guardar usuario-->
         <p-dialog [(visible)]="UsuarioDialog" [style]="{width: '480px'}" header="Usuario Detalle" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
               <form [formGroup]="usuariosForm">
@@ -120,7 +120,7 @@
           
     
 
-          <!--Editar cliente-->
+          <!--Editar usuario-->
           <p-dialog [(visible)]="EditarUsuarioDialog" [style]="{width: '480px'}" header="Usuario Detalle" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
               <form [formGroup]="usuariosForm">
@@ -128,7 +128,7 @@
                 <div class="formgroup-inline">
 
                 <div class="field">
-                  <input type="text" placeholder="Nombre cliente" pInputText id="username" formControlName="username" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('username')?.invalid} "  />
+                  <input type="text" placeholder="Nombre usuario" pInputText id="username" formControlName="username" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('username')?.invalid} "  />
                   <div *ngIf="submitted && usuariosForm.get('username')?.invalid" class="p-error">
                     Este campo es obligatorio.
                   </div>

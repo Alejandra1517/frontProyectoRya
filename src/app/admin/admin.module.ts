@@ -67,6 +67,7 @@ import { RolesComponent } from './components/roles/roles.component';
     InputNumberModule,
     DialogModule,
     RouterModule.forChild([
+      { path: 'usuarios', component: UsuariosComponent },
       { path: 'clientes', component: ClientesComponent },
       { path: 'servicios', component: ServiciosComponent },
       { path: 'materiales', component: MaterialesComponent },

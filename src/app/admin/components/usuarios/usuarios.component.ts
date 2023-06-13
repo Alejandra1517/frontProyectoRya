@@ -32,10 +32,10 @@ export class UsuariosComponent {
   usuariosForm!: FormGroup;
   modificarUsuarioForm!: FormGroup;
   Usuarios: Usuario[] = [];
-  clienteSeleccionado!: Usuario;
+  usuarioSeleccionado!: Usuario;
 
   constructor(
-    private clienteService: UsuarioService,
+    private usuarioService: UsuarioService,
     private messageService: MessageService,
     private formBuilder: FormBuilder
   ) {}
@@ -45,10 +45,8 @@ export class UsuariosComponent {
     this.initForm();
 
     this.cols = [
-      { field: 'nombre_cliente', header: 'Nombre Usuario' },
-      { field: 'documento', header: 'Documento' },
-      { field: 'telefono', header: 'Télefono' },
-      { field: 'direccion', header: 'Dirección' },
+      { field: 'username', header: 'Nombre de usuario' },
+      { field: 'password', header: 'Contraseña' },
       { field: 'estado', header: 'Estado' }
   ];
 
@@ -74,7 +72,7 @@ export class UsuariosComponent {
     }
 
     const formData = this.usuariosForm.value;
-    this.clienteService.saveUsuario(formData).subscribe(
+    this.usuarioService.saveUsuario(formData).subscribe(
       (response) => {
         console.log('Usuario registrado exitosamente:', response);
         this.getUsuarios();
@@ -87,7 +85,7 @@ export class UsuariosComponent {
         this.UsuarioDialog = false;
       },
       (error) => {
-        console.log('Error al registrar el cliente:', error);
+        console.log('Error al registrar el usuario:', error);
       }
     );
   }
@@ -99,9 +97,9 @@ export class UsuariosComponent {
  
     const formData = this.usuariosForm.value;
 
-    formData.id_usuario = this.clienteSeleccionado.id_usuario; // Agrega el ID del cliente al formulario
+    formData.id_usuario = this.usuarioSeleccionado.id_usuario; // Agrega el ID del usuario al formulario
 
-    this.clienteService.updateUsuario(formData.id_cliente, formData).subscribe(
+    this.usuarioService.updateUsuario(formData.id_usuario, formData).subscribe(
       (response) => {
         console.log('Usuario actualizado exitosamente:', response);
         this.getUsuarios();
@@ -114,13 +112,13 @@ export class UsuariosComponent {
         this.EditarUsuarioDialog = false;
       },
       (error) => {
-        console.log('Error al actualizar el cliente:', error);
+        console.log('Error al actualizar el usuario:', error);
       }
     );
   }
 
   getUsuarios(): void {
-    this.clienteService.getUsuarios().subscribe(
+    this.usuarioService.getUsuarios().subscribe(
       (response: Usuario[]) => {
         this.Usuarios = response;
       },
@@ -140,13 +138,13 @@ export class UsuariosComponent {
     this.deleteUsuariosDialog = true;
   }
 
-  editUsuario(cliente: Usuario) {
-    if (cliente) {
-      this.clienteSeleccionado = cliente;
+  editUsuario(usuario: Usuario) {
+    if (usuario) {
+      this.usuarioSeleccionado = usuario;
       this.usuariosForm.patchValue({
-        username: cliente.username,
-        password: cliente.password,
-        estado: cliente.estado,
+        username: usuario.username,
+        password: usuario.password,
+        estado: usuario.estado,
       });
       this.submitted = false;
       this.EditarUsuarioDialog = true; // Utiliza la propiedad correcta
@@ -154,25 +152,25 @@ export class UsuariosComponent {
   }
 
 
-  deleteUsuario(cliente: Usuario) {
-    this.clienteSeleccionado = cliente;
+  deleteUsuario(usuario: Usuario) {
+    this.usuarioSeleccionado = usuario;
     this.deleteUsuarioDialog = true;
   }
 
   confirmDelete() {
     if (
-      this.clienteSeleccionado &&
-      typeof this.clienteSeleccionado.id_usuario === 'number'
+      this.usuarioSeleccionado &&
+      typeof this.usuarioSeleccionado.id_usuario === 'number'
     ) {
       this.deleteUsuarioDialog = false;
 
-      this.clienteService.deleteUsuario(this.clienteSeleccionado.id_usuario).subscribe(
+      this.usuarioService.deleteUsuario(this.usuarioSeleccionado.id_usuario).subscribe(
         (response) => {
           console.log('Usuario eliminado exitosamente:', response);
           this.getUsuarios();
         },
         (error) => {
-          console.log('Error al eliminar el cliente:', error);
+          console.log('Error al eliminar el usuario:', error);
         }
       );
 
@@ -196,8 +194,8 @@ export class UsuariosComponent {
 
 }
 
-  seleccionarUsuario(cliente: Usuario) {
-    this.clienteSeleccionado = cliente;
+  seleccionarUsuario(usuario: Usuario) {
+    this.usuarioSeleccionado = usuario;
   }
 
   hideDialog() {

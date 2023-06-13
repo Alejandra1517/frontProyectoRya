@@ -18,11 +18,11 @@ export class UsuarioService {
   }
 
   getUsuarios(): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>(this.URL_API + '/getUsuario').pipe(map(res => res));
+    return this.httpClient.get<Usuario[]>(this.URL_API + '/getUsers').pipe(map(res => res));
   }
 
   saveUsuario(request: any): Observable<any> {
-    return this.httpClient.post<any>(this.URL_API + '/postUsuario', request).pipe(map(resp => resp));
+    return this.httpClient.post<any>(this.URL_API + '/postUser', request).pipe(map(resp => resp));
   }
 
   updateUsuario(id_usuario: number, request: any): Observable<any> {

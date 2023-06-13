@@ -10,6 +10,7 @@ import { ClienteService } from './admin/service/cliente.service';
 import { ServicioServiceService } from './admin/service/servicio.service';
 import { EmpleadoService } from './admin/service/empleados.service';
 import { authInterceptorProviders } from './auth/service/auth.interceptor';
+import { UsuarioService } from './admin/service/usuarios.service';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,7 @@ import { authInterceptorProviders } from './auth/service/auth.interceptor';
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        ProductService, ClienteService, ServicioServiceService, EmpleadoService,  
+        ProductService, ClienteService, ServicioServiceService, EmpleadoService, UsuarioService, 
         authInterceptorProviders
     ],
     bootstrap: [AppComponent]
