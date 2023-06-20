@@ -10,7 +10,7 @@ import baserUrl from './helper';
 export class LoginServiceService {
 
   //Gestiona el estado de inicio de sesión de la aplicación para saber si un usuario ha iniciado sesión o no  
-  public loginStatusSubjec = new Subject<boolean>(); //Subject es un tipo de observable permite emitir datos y permite tambien la subscripción a ellos 
+  public loginStatusSubject = new Subject<boolean>(); //Subject es un tipo de observable permite emitir datos y permite tambien la subscripción a ellos 
 
   constructor(private http:HttpClient) { }
 
@@ -66,7 +66,8 @@ export class LoginServiceService {
 
   public getUserRole(){
     let user = this.getUser();
-    return user.authorities[0].authority;
+    return user.role;
+
   }
 
 }

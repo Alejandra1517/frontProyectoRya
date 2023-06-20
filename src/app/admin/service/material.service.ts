@@ -12,7 +12,7 @@ export class MaterialService {
 
 
   
-  URL_API: string = 'http://localhost:8080/clients'
+  URL_API: string = 'http://localhost:8081/api'
   constructor(private httpClient: HttpClient) {
 
   }

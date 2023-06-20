@@ -7,13 +7,13 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class ClienteService {
 
-    URL_API: string = 'http://localhost:8080/clients'
+    URL_API: string = 'http://localhost:8081/api'
     constructor(private httpClient: HttpClient) {
   
     }
   
     getClientes(): Observable<Cliente[]> {
-      return this.httpClient.get<Cliente[]>(this.URL_API + '/getClients').pipe(map(res => res));
+      return this.httpClient.get<Cliente[]>(this.URL_API + '/getClientes').pipe(map(res => res));
     }
 
     // getProducts() {
@@ -24,22 +24,22 @@ export class ClienteService {
     // }
   
     saveCliente(request: any): Observable<any> {
-      return this.httpClient.post<any>(this.URL_API + '/postClient', request).pipe(map(resp => resp));
+      return this.httpClient.post<any>(this.URL_API + '/postCliente', request).pipe(map(resp => resp));
     }
   
     updateCliente(id_cliente: number, request: any): Observable<any> {
-      const url = `${this.URL_API}/putClient/${id_cliente}`;
+      const url = `${this.URL_API}/putCliente/${id_cliente}`;
       return this.httpClient.put<any>(url, request).pipe(map(resp => resp));
     }
   
     deleteCliente(id_cliente: number): Observable<any> {
-      const url = `${this.URL_API}/deleteClient/${id_cliente}`;
+      const url = `${this.URL_API}/deleteCliente/${id_cliente}`;
       return this.httpClient.delete<any>(url).pipe(map(resp => resp));
     }
 
 
     deleteClientes(): Observable<any> {
-      const url = `${this.URL_API}/deleteAllClients`;
+      const url = `${this.URL_API}/deleteAllClientes`;
       return this.httpClient.delete<any>(url).pipe(map(resp => resp));
     }
     

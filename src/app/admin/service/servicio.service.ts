@@ -12,21 +12,21 @@ export class ServicioServiceService {
 
 
   
-  URL_API: string = 'http://localhost:8080/clients'
+  URL_API: string = 'http://localhost:8081/api'
   constructor(private httpClient: HttpClient) {
 
   }
 
   getServicio(): Observable<Servicio[]> {
-    return this.httpClient.get<Servicio[]>(this.URL_API + '/getServices').pipe(map(res => res));
+    return this.httpClient.get<Servicio[]>(this.URL_API + '/getServicio').pipe(map(res => res));
   }
 
   saveServicio(request: any): Observable<any> {
-    return this.httpClient.post<any>(this.URL_API + '/postService', request).pipe(map(resp => resp));
+    return this.httpClient.post<any>(this.URL_API + '/postServicio', request).pipe(map(resp => resp));
   }
 
   updateServicio(id_service: number, request: any): Observable<any> {
-    const url = `${this.URL_API}/putService/${id_service}`;
+    const url = `${this.URL_API}/putServicio/${id_service}`;
     return this.httpClient.put<any>(url, request).pipe(map(resp => resp));
   }
 

@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class EmpleadoService {
 
-    URL_API: string = 'http://localhost:8080/clients'
+    URL_API: string = 'http://localhost:8081/api'
     constructor(private httpClient: HttpClient) {
   
     }

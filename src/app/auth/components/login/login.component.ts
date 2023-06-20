@@ -16,6 +16,9 @@ import { Router } from '@angular/router';
     `],
     providers: [MessageService]
 })
+
+
+
 export class LoginComponent {
 
   showPassword: boolean = false;
@@ -62,11 +65,13 @@ export class LoginComponent {
             console.log(user);
   
             if (this.loginService.getUserRole() === 'ADMIN') {
-              this.router.navigate(['layout']);
-              this.loginService.loginStatusSubjec.next(true);
-            // } else if (this.loginService.getUserRole() === 'NORMAL') {
-            //   this.router.navigate(['customer']);
-            //   this.loginService.loginStatusSubjec.next(true);
+              console.log("admin")
+              // this.router.navigate(['layout']);
+              this.loginService.loginStatusSubject.next(true);
+            } else if (this.loginService.getUserRole() === 'CLIENTE') {
+              console.log("cliente")
+              // this.router.navigate(['customer']);
+              this.loginService.loginStatusSubject.next(true);
             } else {
               this.loginService.logout();
             }
