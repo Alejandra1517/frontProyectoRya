@@ -124,7 +124,7 @@ export class RolesComponent {
  
     const formData = this.RolsForm.value;
 
-    formData.id_Rol = this.RolSeleccionado.id_rol; // Agrega el ID del Rol al formulario
+    formData.id_rol = this.RolSeleccionado.id_rol; // Agrega el ID del Rol al formulario
 
     this.rolService.updateRol(formData.id_Rol, formData).subscribe(
       (response) => {

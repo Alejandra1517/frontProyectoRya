@@ -24,7 +24,6 @@ import { DialogModule } from 'primeng/dialog';
 
 import { CrudComponent } from './components/crud/crud.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
-import { ConfiguracionComponent } from './components/configuracion/configuracion.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ServiciosComponent } from './components/servicios/servicios.component';
 import { MaterialesComponent } from './components/materiales/materiales.component';
@@ -40,7 +39,6 @@ import { InputSwitchModule } from 'primeng/inputswitch';
   declarations: [
     ClientesComponent,
     CrudComponent,
-    ConfiguracionComponent,
     UsuariosComponent,
     ServiciosComponent,
     MaterialesComponent,

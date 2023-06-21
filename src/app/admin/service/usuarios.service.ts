@@ -33,12 +33,12 @@ export class UsuarioService {
     return this.httpClient.post<any>(this.URL_API + '/postUser', request).pipe(map(resp => resp));
   }
 
-  updateUsuario(id_usuario: number, request: any): Observable<any> {
+  updateUsuario(id_usuario: string, request: any): Observable<any> {
     const url = `${this.URL_API}/putUser/${id_usuario}`;
     return this.httpClient.put<any>(url, request).pipe(map(resp => resp));
   }
 
-  deleteUsuario(id_usuario: number): Observable<any> {
+  deleteUsuario(id_usuario: string): Observable<any> {
     const url = `${this.URL_API}/deleteUser/${id_usuario}`;
     return this.httpClient.delete<any>(url).pipe(map(resp => resp));
   }

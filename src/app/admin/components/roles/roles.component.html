@@ -8,7 +8,7 @@
               <button
                 pButton
                 pRipple
-                label="Registrar Rol"
+                label="Registrar rol"
                 icon="pi pi-plus"
                 class="p-button-success mr-2"
                 (click)="openNew()"
@@ -95,7 +95,7 @@
               </td>
               <td style="width: 14%; min-width: 10rem">
                 <span class="p-column-title">Estado</span>
-                <span [class]="'Rol-badge status-' + (Rol.Estado ? Rol.Estado.toString().toLowerCase() : '')">{{ Rol.estado === 1 ? "Disponible" : "Agotado"}}</span>
+                <span [class]="'Rol-badge status-' + (Rol.Estado ? Rol.Estado.toString().toLowerCase() : '')">{{ Rol.estado === 1 ? "Activo" : "Inactivo"}}</span>
               </td>
 
               <td>
@@ -125,8 +125,8 @@
       <!--Guardar Rol-->
       <p-dialog
         [(visible)]="RolDialog"
-        [style]="{ width: '480px', height: '700' }"
-        header="Rol Detalle"
+        [style]="{width: '480px', height: '700'}"
+        header="Detalle rol "
         [modal]="true"
         class="p-fluid"
       >
@@ -169,13 +169,48 @@
               </div>
 
 
-              <!-- <p-inputSwitch [(ngModel)]="valSwitch"></p-inputSwitch> -->
 
             </div>
             
             <div class="formgroup-inline">
-              
-              </div>
+              <p-inputSwitch formControlName="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Roles:</label>
+            
+              <p-inputSwitch formControlName="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Usuarios:</label>
+
+            </div>
+
+            <div class="formgroup-inline">
+
+              <p-inputSwitch formControlName="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Materiales:</label>
+
+              <p-inputSwitch formControlName="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Servicios:</label>
+
+              <p-inputSwitch formControlName="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Empleados:</label>
+
+          </div>
+
+
+            <div class="formgroup-inline">
+
+              <p-inputSwitch formControlName="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Clientes:</label>
+            
+              <p-inputSwitch formControlName="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Solicitudes:</label>
+
+              <p-inputSwitch formControlName="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Cotizaciones:</label>
+
+              <p-inputSwitch formControlName="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Obras:</label>
+
+            </div>
+            
           </form>
         </ng-template>
         
@@ -226,7 +261,7 @@
       <p-dialog
         [(visible)]="EditarRolDialog"
         [style]="{ width: '480px' }"
-        header="Rol Detalle"
+        header="Detalle rol "
         [modal]="true"
         class="p-fluid"
       >
@@ -267,9 +302,40 @@
                 ></p-dropdown>
               </div>
             </div>
+            
+            <div class="formgroup-inline">
+              <p-inputSwitch [(ngModel)]="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Roles:</label>
+            
+              <p-inputSwitch [(ngModel)]="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Usuarios:</label>
+
+              <p-inputSwitch [(ngModel)]="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Materiales:</label>
+
+              <p-inputSwitch [(ngModel)]="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Servicios:</label>
+
+              <p-inputSwitch [(ngModel)]="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Empleados:</label>
+
+            </div>
+
+
             <div class="formgroup-inline">
 
-          
+              <p-inputSwitch [(ngModel)]="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Clientes:</label>
+            
+              <p-inputSwitch [(ngModel)]="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Solicitudes:</label>
+
+              <p-inputSwitch [(ngModel)]="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Cotizaciones:</label>
+
+              <p-inputSwitch [(ngModel)]="valSwitch" class="p-mr-2"></p-inputSwitch>
+              <label for="switchId">Obras:</label>
+
             </div>
           </form>
         </ng-template>

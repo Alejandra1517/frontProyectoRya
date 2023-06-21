@@ -64,12 +64,12 @@ export class LoginComponent {
             this.loginService.setUser(user);
             console.log(user);
   
-            if (this.loginService.getUserRole() === 'ADMIN') {
-              console.log("admin")
+            if (this.loginService.getUserRole() === 'Administrador') {
+              console.log("Administrador")
               // this.router.navigate(['layout']);
               this.loginService.loginStatusSubject.next(true);
-            } else if (this.loginService.getUserRole() === 'CLIENTE') {
-              console.log("cliente")
+            } else if (this.loginService.getUserRole() === 'Cliente') {
+              console.log("Cliente")
               // this.router.navigate(['customer']);
               this.loginService.loginStatusSubject.next(true);
             } else {

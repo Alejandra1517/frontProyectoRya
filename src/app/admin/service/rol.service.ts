@@ -33,7 +33,7 @@ export class RolService {
     return this.httpClient.post<any>(this.URL_API + '/postRol', request).pipe(map(resp => resp));
   }
 
-  updateRol(id_usuario: number, request: any): Observable<any> {
+  updateRol(id_usuario: string, request: any): Observable<any> {
     const url = `${this.URL_API}/putRol/${id_usuario}`;
     return this.httpClient.put<any>(url, request).pipe(map(resp => resp));
   }
