@@ -21,10 +21,17 @@ export class ClientesComponent implements OnInit {
   cols: any[] = [];
   statuses: any[] = [];
   rowsPerPageOptions = [5, 10, 20];
-  Cliente: Cliente = {};
+  Cliente: Cliente = {
+    _id: '',
+    nombre_cliente: '',
+    documento: '',
+    telefono: '',
+    direccion: '',
+    estado: 0
+  };
   clientesForm!: FormGroup;
   modificarClienteForm!: FormGroup;
-  Clientes: Cliente[] = [];
+  clientes: Cliente[] = [];
   clienteSeleccionado!: Cliente;
 
   constructor(
@@ -94,7 +101,7 @@ export class ClientesComponent implements OnInit {
  
     const formData = this.clientesForm.value;
 
-    formData.id_cliente = this.clienteSeleccionado.id_cliente; // Agrega el ID del cliente al formulario
+    formData.id_cliente = this.clienteSeleccionado._id; // Agrega el ID del cliente al formulario
 
     this.clienteService.updateCliente(formData.id_cliente, formData).subscribe(
       (response) => {
@@ -114,16 +121,19 @@ export class ClientesComponent implements OnInit {
     );
   }
 
+
   getClientes(): void {
     this.clienteService.getClientes().subscribe(
-      (response: Cliente[]) => {
-        this.Clientes = response;
+      (clientes: Cliente[]) => {
+        this.clientes = clientes;
       },
       (error) => {
         console.log('Error al obtener los clientes:', error);
       }
     );
   }
+  
+
 
   openNew() {
     this.submitted = false;
@@ -159,11 +169,12 @@ export class ClientesComponent implements OnInit {
   confirmDelete() {
     if (
       this.clienteSeleccionado &&
-      typeof this.clienteSeleccionado.id_cliente === 'number'
+      typeof this.clienteSeleccionado._id === 'string'
     ) {
       this.deleteClienteDialog = false;
 
-      this.clienteService.deleteCliente(this.clienteSeleccionado.id_cliente).subscribe(
+      console.log(this.clienteSeleccionado._id)
+      this.clienteService.deleteCliente(this.clienteSeleccionado._id).subscribe(
         (response) => {
           console.log('Cliente eliminado exitosamente:', response);
           this.getClientes();
@@ -182,10 +193,26 @@ export class ClientesComponent implements OnInit {
     }
   }
 
+
+  eliminarRegistros(): void {
+    this.clienteService.deleteAllClientes().subscribe(
+      response => {
+        console.log(response.msg);
+        // Aquí puedes realizar las acciones adicionales que necesites
+      },
+      error => {
+        console.error(error);
+        // Manejo de errores
+      }
+    );
+  }
+
+
+
   confirmDeleteSelected() {
     this.deleteClienteDialog = false;
 
-    this.Clientes = this.Clientes.filter(val => !this.selectedClientes.includes(val)); //Elimina los productos seleccionados del array products 
+    this.clientes = this.clientes.filter(val => !this.selectedClientes.includes(val)); //Elimina los productos seleccionados del array products 
     
     this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
     

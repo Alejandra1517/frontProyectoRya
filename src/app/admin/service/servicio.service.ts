@@ -17,8 +17,15 @@ export class ServicioServiceService {
 
   }
 
+  // getServicio(): Observable<Servicio[]> {
+  //   return this.httpClient.get<Servicio[]>(this.URL_API + '/getServicios').pipe(map(res => res));
+  // }
+
+  
   getServicio(): Observable<Servicio[]> {
-    return this.httpClient.get<Servicio[]>(this.URL_API + '/getServicio').pipe(map(res => res));
+    return this.httpClient.get<any>(`${this.URL_API}/getServicios`).pipe(
+      map(response => response.allServicios)
+    );
   }
 
   saveServicio(request: any): Observable<any> {
@@ -30,7 +37,7 @@ export class ServicioServiceService {
     return this.httpClient.put<any>(url, request).pipe(map(resp => resp));
   }
 
-  deleteServicio(id_service: number): Observable<any> {
+  deleteServicio(id_service: string): Observable<any> {
     const url = `${this.URL_API}/deleteServicio/${id_service}`;
     return this.httpClient.delete<any>(url).pipe(map(resp => resp));
   }

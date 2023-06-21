@@ -25,7 +25,7 @@ export class ServiciosComponent implements OnInit {
   categorias: any[] = [];
   rowsPerPageOptions = [5, 10, 20];
   Servicio: Servicio = {
-    id_servicio: 0,
+    _id: '',
     nombre_servicio: '',
     categoria: 0,
     valor_unitario: 0,
@@ -120,7 +120,7 @@ export class ServiciosComponent implements OnInit {
  
     const formData = this.ServiciosForm.value;
 
-    formData.id_Servicio = this.ServicioSeleccionado.id_servicio; // Agrega el ID del Servicio al formulario
+    formData.id_Servicio = this.ServicioSeleccionado._id; // Agrega el ID del Servicio al formulario
 
     this.servicioServiceService.updateServicio(formData.id_Servicio, formData).subscribe(
       (response) => {
@@ -143,16 +143,29 @@ export class ServiciosComponent implements OnInit {
 
 
 
+  // getServicios(): void {
+  //   this.servicioServiceService.getServicio().subscribe(
+  //     (response: Servicio[]) => {
+  //       this.Servicios = response;
+  //     },
+  //     (error) => {
+  //       console.log('Error al obtener los Servicios:', error);
+  //     }
+  //   );
+  // }
+
+
   getServicios(): void {
     this.servicioServiceService.getServicio().subscribe(
-      (response: Servicio[]) => {
-        this.Servicios = response;
+      (servicios: Servicio[]) => {
+        this.Servicios = servicios;
       },
       (error) => {
-        console.log('Error al obtener los Servicios:', error);
+        console.log('Error al obtener los empleados:', error);
       }
     );
   }
+
 
   openNew() {
     this.submitted = false;
@@ -189,11 +202,11 @@ export class ServiciosComponent implements OnInit {
   confirmDelete() {
     if (
       this.ServicioSeleccionado &&
-      typeof this.ServicioSeleccionado.id_servicio === 'number'
+      typeof this.ServicioSeleccionado._id === 'string'
     ) {
       this.deleteServicioDialog = false;
 
-      this.servicioServiceService.deleteServicio(this.ServicioSeleccionado.id_servicio).subscribe(
+      this.servicioServiceService.deleteServicio(this.ServicioSeleccionado._id).subscribe(
         (response) => {
           console.log('Servicio eliminado exitosamente:', response);
           this.getServicios();

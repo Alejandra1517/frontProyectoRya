@@ -26,7 +26,7 @@ export class EmpleadosComponent implements OnInit {
   statuses: any[] = [];
   rowsPerPageOptions = [5, 10, 20];
   Empleado: Empleado = {
-    id_empleado: 0,
+    _id: '',
     nombre: '',
     telefono: '',
     documento: '',
@@ -105,7 +105,7 @@ export class EmpleadosComponent implements OnInit {
  
     const formData = this.empleadosForm.value;
 
-    formData.id_empleado = this.empleadoSeleccionado.id_empleado; // Agrega el ID del empleado al formulario
+    formData.id_empleado = this.empleadoSeleccionado._id; // Agrega el ID del empleado al formulario
 
     this.empleadoService.updateEmpleado(formData.id_empleado, formData).subscribe(
       (response) => {
@@ -125,16 +125,30 @@ export class EmpleadosComponent implements OnInit {
     );
   }
 
+  // getEmpleados(): void {
+  //   this.empleadoService.getEmpleados().subscribe(
+  //     (response: Empleado[]) => {
+  //       this.Empleados = response;
+  //     },
+  //     (error) => {
+  //       console.log('Error al obtener los empleados:', error);
+  //     }
+  //   );
+  // }
+
+
   getEmpleados(): void {
     this.empleadoService.getEmpleados().subscribe(
-      (response: Empleado[]) => {
-        this.Empleados = response;
+      (empleados: Empleado[]) => {
+        this.Empleados = empleados;
       },
       (error) => {
         console.log('Error al obtener los empleados:', error);
       }
     );
   }
+
+
 
   openNew() {
     this.submitted = false;
@@ -170,11 +184,11 @@ export class EmpleadosComponent implements OnInit {
   confirmDelete() {
     if (
       this.empleadoSeleccionado &&
-      typeof this.empleadoSeleccionado.id_empleado === 'number'
+      typeof this.empleadoSeleccionado._id === 'string'
     ) {
       this.deleteEmpleadoDialog = false;
 
-      this.empleadoService.deleteEmpleado(this.empleadoSeleccionado.id_empleado).subscribe(
+      this.empleadoService.deleteEmpleado(this.empleadoSeleccionado._id).subscribe(
         (response) => {
           console.log('Empleado eliminado exitosamente:', response);
           this.getEmpleados();

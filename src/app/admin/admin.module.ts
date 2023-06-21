@@ -33,6 +33,7 @@ import { SolicitudesComponent } from './components/solicitudes/solicitudes.compo
 import { CotizacionesComponent } from './components/cotizaciones/cotizaciones.component';
 import { ObrasComponent } from './components/obras/obras.component';
 import { RolesComponent } from './components/roles/roles.component';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 @NgModule({
@@ -65,8 +66,11 @@ import { RolesComponent } from './components/roles/roles.component';
     DropdownModule,
     RadioButtonModule,
     InputNumberModule,
+    InputSwitchModule,
     DialogModule,
     RouterModule.forChild([
+      { path: 'roles', component: RolesComponent },
+      { path: 'usuarios', component: UsuariosComponent },
       { path: 'clientes', component: ClientesComponent },
       { path: 'servicios', component: ServiciosComponent },
       { path: 'materiales', component: MaterialesComponent },

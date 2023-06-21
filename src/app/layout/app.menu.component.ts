@@ -26,16 +26,16 @@ export class AppMenuComponent implements OnInit {
                     //     routerLink: ['/admin/crud']
                     // },
 
-                    // {
-                    //     label: 'Configuración',
-                    //     icon: 'pi pi-cog',
-                    //     routerLink: ['/admin/materiales']
-                    // },
+                    {
+                        label: 'Configuración',
+                        icon: 'pi pi-cog',
+                        routerLink: ['/admin/roles']
+                    },
 
                     {
                         label: 'Usuarios',
                         icon: 'pi pi-users',
-                        routerLink: ['/admin/usarios']
+                        routerLink: ['/admin/usuarios']
                     },
 
                     {

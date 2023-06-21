@@ -17,9 +17,17 @@ export class UsuarioService {
 
   }
 
+  // getUsuarios(): Observable<Usuario[]> {
+  //   return this.httpClient.get<Usuario[]>(this.URL_API + '/getUsers').pipe(map(res => res));
+  // }
+
+
   getUsuarios(): Observable<Usuario[]> {
-    return this.httpClient.get<Usuario[]>(this.URL_API + '/getUsers').pipe(map(res => res));
+    return this.httpClient.get<any>(`${this.URL_API}/getUsers`).pipe(
+      map(response => response.usuarios)
+    );
   }
+
 
   saveUsuario(request: any): Observable<any> {
     return this.httpClient.post<any>(this.URL_API + '/postUser', request).pipe(map(resp => resp));
@@ -34,8 +42,6 @@ export class UsuarioService {
     const url = `${this.URL_API}/deleteUser/${id_usuario}`;
     return this.httpClient.delete<any>(url).pipe(map(resp => resp));
   }
-
-
 
 
 }

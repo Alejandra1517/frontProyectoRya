@@ -3,12 +3,12 @@
 //     value: string;
 // }
 export interface Cliente {
-    id_cliente?: number;
-    nombre_cliente?: string;
-    documento?: string;
-    telefono?: number;
-    direccion?: string;
-    estado?: number;
+    _id: string;
+    nombre_cliente: string;
+    documento: string;
+    telefono: string;
+    direccion: string;
+    estado: number;
 }
 
 

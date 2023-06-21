@@ -33,7 +33,7 @@ export class MaterialesComponent implements OnInit {
 
   rowsPerPageOptions = [5, 10, 20];
   Material: Material = {
-    id_material: 0,
+    _id: '',
     nombre_material: '',
     proveedor: '',
     estado: 0,
@@ -124,7 +124,7 @@ export class MaterialesComponent implements OnInit {
  
     const formData = this.MaterialsForm.value;
 
-    formData.id_Material = this.MaterialSeleccionado.id_material; // Agrega el ID del Material al formulario
+    formData.id_Material = this.MaterialSeleccionado._id; // Agrega el ID del Material al formulario
 
     this.materialService.updateMaterial(formData.id_Material, formData).subscribe(
       (response) => {
@@ -147,16 +147,29 @@ export class MaterialesComponent implements OnInit {
 
 
 
+  // getMaterials(): void {
+  //   this.materialService.getMaterial().subscribe(
+  //     (response: Material[]) => {
+  //       this.Materials = response;
+  //     },
+  //     (error) => {
+  //       console.log('Error al obtener los Materials:', error);
+  //     }
+  //   );
+  // }
+
+
   getMaterials(): void {
     this.materialService.getMaterial().subscribe(
-      (response: Material[]) => {
-        this.Materials = response;
+      (materiales: Material[]) => {
+        this.Materials = materiales;
       },
       (error) => {
-        console.log('Error al obtener los Materials:', error);
+        console.log('Error al obtener los empleados:', error);
       }
     );
   }
+
 
   openNew() {
     this.submitted = false;
@@ -191,11 +204,11 @@ export class MaterialesComponent implements OnInit {
   confirmDelete() {
     if (
       this.MaterialSeleccionado &&
-      typeof this.MaterialSeleccionado.id_material === 'number'
+      typeof this.MaterialSeleccionado._id === 'string'
     ) {
       this.deleteMaterialDialog = false;
 
-      this.materialService.deleteMaterial(this.MaterialSeleccionado.id_material).subscribe(
+      this.materialService.deleteMaterial(this.MaterialSeleccionado._id).subscribe(
         (response) => {
           console.log('Material eliminado exitosamente:', response);
           this.getMaterials();

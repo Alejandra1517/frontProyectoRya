@@ -12,9 +12,18 @@ export class EmpleadoService {
   
     }
   
+    // getEmpleados(): Observable<Empleado[]> {
+    //   return this.httpClient.get<Empleado[]>(this.URL_API + '/getEmpleados').pipe(map(res => res));
+    // }
+
+
     getEmpleados(): Observable<Empleado[]> {
-      return this.httpClient.get<Empleado[]>(this.URL_API + '/getEmpleados').pipe(map(res => res));
+      return this.httpClient.get<any>(`${this.URL_API}/getEmpleados`).pipe(
+        map(response => response.allEmpleados)
+      );
     }
+
+
 
   
     saveEmpleado(request: any): Observable<any> {
@@ -26,10 +35,11 @@ export class EmpleadoService {
       return this.httpClient.put<any>(url, request).pipe(map(resp => resp));
     }
   
-    deleteEmpleado(id_empleado: number): Observable<any> {
+    deleteEmpleado(id_empleado: string): Observable<any> {
       const url = `${this.URL_API}/deleteEmpleado/${id_empleado}`;
       return this.httpClient.delete<any>(url).pipe(map(resp => resp));
     }
+
 
 
     // deleteEmpleados(): Observable<any> {

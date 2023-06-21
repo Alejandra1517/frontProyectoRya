@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { UsuarioService } from 'src/app/admin/service/usuarios.service';
+import { RolService } from 'src/app/admin/service/rol.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '../../models/usuarios';
 
@@ -12,7 +13,7 @@ import { Usuario } from '../../models/usuarios';
   styleUrls: ['./usuarios.component.scss'],
   providers: [MessageService]
 })
-export class UsuariosComponent {
+export class UsuariosComponent implements OnInit{
 
   UsuarioDialog: boolean = false;
   EditarUsuarioDialog: boolean = false;
@@ -24,28 +25,48 @@ export class UsuariosComponent {
   statuses: any[] = [];
   rowsPerPageOptions = [5, 10, 20];
   Usuario: Usuario = {
-    id_usuario: 0,
+    id_usuario: '',
     username: '',
+    nombre_completo: '',
     password: '',
-    estado: 0
+    estado: 0,
+    id_rol: ''
   };
+
+
+
   usuariosForm!: FormGroup;
   modificarUsuarioForm!: FormGroup;
   Usuarios: Usuario[] = [];
-  clienteSeleccionado!: Usuario;
+  usuarioSeleccionado!: Usuario;
 
   constructor(
-    private clienteService: UsuarioService,
+    private rolService: RolService,
+    private usuarioService: UsuarioService,
     private messageService: MessageService,
     private formBuilder: FormBuilder
   ) {}
 
-  ngOnInit(): void {
+
+  roles: any[] = [];
+
+  ngOnInit() {
+
+
+    this.rolService.getRoles().subscribe(
+      (data) => {
+        this.roles = data;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
     this.getUsuarios();
     this.initForm();
 
     this.cols = [
-      { field: 'nombre_cliente', header: 'Nombre Usuario' },
+      { field: 'nombre_usuario', header: 'Nombre Usuario' },
       { field: 'documento', header: 'Documento' },
       { field: 'telefono', header: 'Télefono' },
       { field: 'direccion', header: 'Dirección' },
@@ -61,8 +82,10 @@ export class UsuariosComponent {
   initForm(): void {
     this.usuariosForm = this.formBuilder.group({
       username: ['', Validators.required],
+      nombre_completo: ['', Validators.required],
       password: ['', Validators.required],
       estado: ['1', Validators.required],
+      id_rol: ['', Validators.required]
     });
   }
 
@@ -74,7 +97,7 @@ export class UsuariosComponent {
     }
 
     const formData = this.usuariosForm.value;
-    this.clienteService.saveUsuario(formData).subscribe(
+    this.usuarioService.saveUsuario(formData).subscribe(
       (response) => {
         console.log('Usuario registrado exitosamente:', response);
         this.getUsuarios();
@@ -87,7 +110,7 @@ export class UsuariosComponent {
         this.UsuarioDialog = false;
       },
       (error) => {
-        console.log('Error al registrar el cliente:', error);
+        console.log('Error al registrar el usuario:', error);
       }
     );
   }
@@ -99,9 +122,9 @@ export class UsuariosComponent {
  
     const formData = this.usuariosForm.value;
 
-    formData.id_usuario = this.clienteSeleccionado.id_usuario; // Agrega el ID del cliente al formulario
+    formData.id_usuario = this.usuarioSeleccionado.id_usuario; // Agrega el ID del usuario al formulario
 
-    this.clienteService.updateUsuario(formData.id_cliente, formData).subscribe(
+    this.usuarioService.updateUsuario(formData.id_usuario, formData).subscribe(
       (response) => {
         console.log('Usuario actualizado exitosamente:', response);
         this.getUsuarios();
@@ -114,21 +137,34 @@ export class UsuariosComponent {
         this.EditarUsuarioDialog = false;
       },
       (error) => {
-        console.log('Error al actualizar el cliente:', error);
+        console.log('Error al actualizar el usuario:', error);
       }
     );
   }
 
+  // getUsuarios(): void {
+  //   this.usuarioService.getUsuarios().subscribe(
+  //     (response: Usuario[]) => {
+  //       this.Usuarios = response;
+  //     },
+  //     (error) => {
+  //       console.log('Error al obtener los usuarios:', error);
+  //     }
+  //   );
+  // }
+
   getUsuarios(): void {
-    this.clienteService.getUsuarios().subscribe(
-      (response: Usuario[]) => {
-        this.Usuarios = response;
+    this.usuarioService.getUsuarios().subscribe(
+      (usuarios: Usuario[]) => {
+        this.Usuarios = usuarios;
       },
       (error) => {
         console.log('Error al obtener los usuarios:', error);
       }
     );
   }
+
+
 
   openNew() {
     this.submitted = false;
@@ -140,13 +176,14 @@ export class UsuariosComponent {
     this.deleteUsuariosDialog = true;
   }
 
-  editUsuario(cliente: Usuario) {
-    if (cliente) {
-      this.clienteSeleccionado = cliente;
+  editUsuario(usuario: Usuario) {
+    if (usuario) {
+      this.usuarioSeleccionado = usuario;
       this.usuariosForm.patchValue({
-        username: cliente.username,
-        password: cliente.password,
-        estado: cliente.estado,
+        username: usuario.username,
+        nombre_completo: usuario.nombre_completo,
+        password: usuario.password,
+        estado: usuario.estado,
       });
       this.submitted = false;
       this.EditarUsuarioDialog = true; // Utiliza la propiedad correcta
@@ -154,25 +191,25 @@ export class UsuariosComponent {
   }
 
 
-  deleteUsuario(cliente: Usuario) {
-    this.clienteSeleccionado = cliente;
+  deleteUsuario(usuario: Usuario) {
+    this.usuarioSeleccionado = usuario;
     this.deleteUsuarioDialog = true;
   }
 
   confirmDelete() {
     if (
-      this.clienteSeleccionado &&
-      typeof this.clienteSeleccionado.id_usuario === 'number'
+      this.usuarioSeleccionado &&
+      typeof this.usuarioSeleccionado.id_usuario === 'number'
     ) {
       this.deleteUsuarioDialog = false;
 
-      this.clienteService.deleteUsuario(this.clienteSeleccionado.id_usuario).subscribe(
+      this.usuarioService.deleteUsuario(this.usuarioSeleccionado.id_usuario).subscribe(
         (response) => {
           console.log('Usuario eliminado exitosamente:', response);
           this.getUsuarios();
         },
         (error) => {
-          console.log('Error al eliminar el cliente:', error);
+          console.log('Error al eliminar el usuario:', error);
         }
       );
 
@@ -196,8 +233,8 @@ export class UsuariosComponent {
 
 }
 
-  seleccionarUsuario(cliente: Usuario) {
-    this.clienteSeleccionado = cliente;
+  seleccionarUsuario(usuario: Usuario) {
+    this.usuarioSeleccionado = usuario;
   }
 
   hideDialog() {

@@ -8,7 +8,7 @@
             <p-toolbar styleClass="mb-4">
                 <ng-template pTemplate="left">
                     <div class="my-2">
-                        <button pButton pRipple label="Registrar cliente" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Registrar usuario" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
                         <button pButton pRipple label="Eliminar" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedUsuarios()" [disabled]="!selectedUsuarios || !selectedUsuarios.length"></button>
                     </div>
                 </ng-template>
@@ -72,26 +72,24 @@
         </div>
 
 
-          <!--Guardar cliente-->
-        <p-dialog [(visible)]="UsuarioDialog" [style]="{width: '480px'}" header="Usuario Detalle" [modal]="true" class="p-fluid">
+          <!--Guardar usuario-->
+        <p-dialog [(visible)]="UsuarioDialog" [style]="{width: '480px', height: '700'}" header="Detalle usuario" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
               <form [formGroup]="usuariosForm">
           
 
-                <div class="formgroup-inline">
+                <div class="formgroup-inline mb-3">
 
                     <div class="field">
-                      <input type="text" placeholder="Nombre de usuario" pInputText id="username" formControlName="username" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('username')?.invalid}" />
+                      <input type="text" placeholder="Correo" pInputText id="username" formControlName="username" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('username')?.invalid}" />
                       <div *ngIf="submitted && usuariosForm.get('username')?.invalid" class="p-error">
                         Este campo es obligatorio.
                       </div>
                     </div>
                     
+
                     <div class="field">
-                      <input type="text" placeholder="Contraseña" pInputText id="password" formControlName="password" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('password')?.invalid}" />
-                      <div *ngIf="submitted && usuariosForm.get('password')?.invalid" class="p-error">
-                        Este campo es obligatorio.
-                      </div>
+                      <p-dropdown formControlName="estado" id="estado" [options]="statuses" placeholder="Seleccionar estado"></p-dropdown>
                     </div>
                 
                 </div>
@@ -99,12 +97,32 @@
                 <div class="formgroup-inline">
 
                 
-                <div class="field">
-                    <p-dropdown formControlName="estado" id="estado" [options]="statuses" placeholder="Seleccionar estado"></p-dropdown>
+                  <div class="field">
+                    <input type="text" placeholder="Contraseña" pInputText id="password" formControlName="password" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('password')?.invalid}" />
+                    <div *ngIf="submitted && usuariosForm.get('password')?.invalid" class="p-error">
+                      Este campo es obligatorio.
+                    </div>
                   </div>
+
+
+                  <div class="form-group">
+                    <p-dropdown id="rol" name="rol" placeholder="Rol" formControlName="id_rol" [options]="roles" optionLabel="nombre"></p-dropdown>
+                  </div>
+                  
 
              
             </div>
+
+            <div class="formgroup-inline">
+              
+              <div class="field">
+                <input type="text" placeholder="Nombre completo" pInputText id="nombre_completo" formControlName="nombre_completo" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('nombre_completo')?.invalid}" />
+                <div *ngIf="submitted && usuariosForm.get('nombre_completo')?.invalid" class="p-error">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+
+          </div>
 
          
 
@@ -120,37 +138,56 @@
           
     
 
-          <!--Editar cliente-->
-          <p-dialog [(visible)]="EditarUsuarioDialog" [style]="{width: '480px'}" header="Usuario Detalle" [modal]="true" class="p-fluid">
+          <!--Editar usuario-->
+          <p-dialog [(visible)]="EditarUsuarioDialog" [style]="{width: '480px'}" header="Detalle usuario" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
               <form [formGroup]="usuariosForm">
 
                 <div class="formgroup-inline">
 
                 <div class="field">
-                  <input type="text" placeholder="Nombre cliente" pInputText id="username" formControlName="username" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('username')?.invalid} "  />
+                  <input type="text" placeholder="Correo" pInputText id="username" formControlName="username" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('username')?.invalid} "  />
                   <div *ngIf="submitted && usuariosForm.get('username')?.invalid" class="p-error">
                     Este campo es obligatorio.
                   </div>
                 </div>
 
+              
+
                 <div class="field">
-                  <input type="text" placeholder="Contraseña" pInputText id="password" formControlName="password" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('password')?.invalid}" />
-                  <div *ngIf="submitted && usuariosForm.get('password')?.invalid" class="p-error">
-                    Este campo es obligatorio.
-                  </div>
-                </div>
+                  <p-dropdown formControlName="estado" id="estado" [options]="statuses" placeholder="Seleccionar estado"></p-dropdown>
+              </div>
 
             </div>
 
             <div class="formgroup-inline">
 
-                <div class="field">
-                    <p-dropdown formControlName="estado" id="estado" [options]="statuses" placeholder="Seleccionar estado"></p-dropdown>
+              <div class="field">
+                <input type="text" placeholder="Contraseña" pInputText id="password" formControlName="password" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('password')?.invalid}" />
+                <div *ngIf="submitted && usuariosForm.get('password')?.invalid" class="p-error">
+                  Este campo es obligatorio.
                 </div>
-           
+              </div>
+         
+
+              <div class="form-group">
+                <p-dropdown id="rol" name="rol" placeholder="Rol" formControlName="id_rol" [options]="roles" optionLabel="nombre"></p-dropdown>
+              </div>
+              
 
             </div>
+
+
+            <div class="formgroup-inline">
+
+              <div class="field">
+                <input type="text" placeholder="Nombre completo" pInputText id="nombre_completo" formControlName="nombre_completo" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('nombre_completo')?.invalid}" />
+                <div *ngIf="submitted && usuariosForm.get('nombre_completo')?.invalid" class="p-error">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+
+          </div>
 
 
               </form>

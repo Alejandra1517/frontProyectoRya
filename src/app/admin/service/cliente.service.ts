@@ -12,16 +12,15 @@ export class ClienteService {
   
     }
   
+
+
     getClientes(): Observable<Cliente[]> {
-      return this.httpClient.get<Cliente[]>(this.URL_API + '/getClientes').pipe(map(res => res));
+      return this.httpClient.get<any>(`${this.URL_API}/getClientes`).pipe(
+        map(response => response.clientes)
+      );
     }
 
-    // getProducts() {
-    //     return this.httpClient.get<any>(this.URL_API + '/getClients')
-    //         .toPromise()
-    //         .then(res => res.data as Cliente[])
-    //         .then(data => data);
-    // }
+
   
     saveCliente(request: any): Observable<any> {
       return this.httpClient.post<any>(this.URL_API + '/postCliente', request).pipe(map(resp => resp));
@@ -32,7 +31,7 @@ export class ClienteService {
       return this.httpClient.put<any>(url, request).pipe(map(resp => resp));
     }
   
-    deleteCliente(id_cliente: number): Observable<any> {
+    deleteCliente(id_cliente: string): Observable<any> {
       const url = `${this.URL_API}/deleteCliente/${id_cliente}`;
       return this.httpClient.delete<any>(url).pipe(map(resp => resp));
     }
@@ -41,6 +40,12 @@ export class ClienteService {
     deleteClientes(): Observable<any> {
       const url = `${this.URL_API}/deleteAllClientes`;
       return this.httpClient.delete<any>(url).pipe(map(resp => resp));
+    }
+
+
+    deleteAllClientes(): Observable<any> {
+      const url = `${this.URL_API}/deleteAllClientes`;
+      return this.httpClient.delete<any>(url);
     }
     
 
