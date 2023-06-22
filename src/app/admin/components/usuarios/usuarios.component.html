@@ -23,7 +23,7 @@
             <p-table #dt [value]="Usuarios" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['username', 'password', 'direccion', 'telefono']" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros" [(selection)]="selectedUsuarios" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
                   <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
-                    <h5 class="m-0">Usuarios Registrados</h5>
+                    <h5 class="m-0">Usuarios registrados</h5>
                     <span class="block mt-2 md:mt-0 p-input-icon-left">
                       <i class="pi pi-search"></i>
                       <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar ..."  class="w-full sm:w-auto"/>
@@ -37,6 +37,7 @@
                     </th>
                     <th>Usuario</th>
                     <th>Contraseña</th>
+                    <th>Rol</th>
                     <th pSortableColumn="estado">Estado <p-sortIcon field="Estado"></p-sortIcon></th>
                     <th></th>
                   </tr>
@@ -51,8 +52,12 @@
                       {{Usuario.username}}
                     </td>
                     <td style="width:14%; min-width:10rem;">
-                      <span class="p-column-title">Documento</span>
+                      <span class="p-column-title">password</span>
                       {{Usuario.password}}
+                    </td>
+                    <td style="width:14%; min-width:10rem;">
+                      <span class="p-column-title">id_rol</span>
+                      {{ selectedRol?.nombre_rol }}
                     </td>
                     <td style="width:14%; min-width: 10rem;">
                       <span class="p-column-title">Estado</span>
@@ -68,12 +73,11 @@
                 </ng-template>
               </p-table>
               
-
         </div>
 
 
           <!--Guardar usuario-->
-        <p-dialog [(visible)]="UsuarioDialog" [style]="{width: '480px', height: '700'}" header="Detalle usuario" [modal]="true" class="p-fluid">
+        <p-dialog [(visible)]="UsuarioDialog" [style]="{width: '480px', 'min-height': '60vh'}" header="Detalle usuario" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
               <form [formGroup]="usuariosForm">
           
@@ -94,7 +98,7 @@
                 
                 </div>
 
-                <div class="formgroup-inline">
+                <div class="formgroup-inline mb-3">
 
                 
                   <div class="field">
@@ -106,9 +110,11 @@
 
 
                   <div class="form-group">
-                    <p-dropdown id="rol" name="rol" placeholder="Rol" formControlName="id_rol" [options]="roles" optionLabel="nombre"></p-dropdown>
+                    <p-dropdown id="rol" name="rol" placeholder="Rol" formControlName="id_rol"
+                      [options]="roles" optionLabel="nombre_rol" (onChange)="onRolChange($event)"></p-dropdown>
                   </div>
                   
+
 
              
             </div>
@@ -139,11 +145,11 @@
     
 
           <!--Editar usuario-->
-          <p-dialog [(visible)]="EditarUsuarioDialog" [style]="{width: '480px'}" header="Detalle usuario" [modal]="true" class="p-fluid">
+          <p-dialog [(visible)]="EditarUsuarioDialog" [style]="{width: '480px', 'min-height': '60vh'}" header="Detalle usuario" [modal]="true" class="p-fluid">
             <ng-template pTemplate="content">
               <form [formGroup]="usuariosForm">
 
-                <div class="formgroup-inline">
+                <div class="formgroup-inline mb-3">
 
                 <div class="field">
                   <input type="text" placeholder="Correo" pInputText id="username" formControlName="username" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('username')?.invalid} "  />
@@ -160,7 +166,7 @@
 
             </div>
 
-            <div class="formgroup-inline">
+            <div class="formgroup-inline mb-3">
 
               <div class="field">
                 <input type="text" placeholder="Contraseña" pInputText id="password" formControlName="password" required autofocus [ngClass]="{'p-invalid': submitted && usuariosForm.get('password')?.invalid}" />
@@ -171,10 +177,11 @@
          
 
               <div class="form-group">
-                <p-dropdown id="rol" name="rol" placeholder="Rol" formControlName="id_rol" [options]="roles" optionLabel="nombre"></p-dropdown>
+                <p-dropdown id="rol" name="rol" placeholder="Rol" formControlName="id_rol"
+                  [options]="roles" optionLabel="nombre_rol" (onChange)="onRolChange($event)"></p-dropdown>
               </div>
-              
 
+              
             </div>
 
 

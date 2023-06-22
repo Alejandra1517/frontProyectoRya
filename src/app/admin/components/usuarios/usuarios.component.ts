@@ -25,7 +25,7 @@ export class UsuariosComponent implements OnInit{
   statuses: any[] = [];
   rowsPerPageOptions = [5, 10, 20];
   Usuario: Usuario = {
-    id_usuario: '',
+    _id: '',
     username: '',
     nombre_completo: '',
     password: '',
@@ -49,18 +49,29 @@ export class UsuariosComponent implements OnInit{
 
 
   roles: any[] = [];
+  
+  selectedRol: any;
 
+
+  onRolChange(event: any) {
+    this.selectedRol = event.value;
+  }
+  
   ngOnInit() {
 
 
     this.rolService.getRoles().subscribe(
       (data) => {
         this.roles = data;
+
+        console.log(this.roles)
       },
       (error) => {
         console.error(error);
       }
     );
+
+
 
     this.getUsuarios();
     this.initForm();
@@ -122,9 +133,9 @@ export class UsuariosComponent implements OnInit{
  
     const formData = this.usuariosForm.value;
 
-    formData.id_usuario = this.usuarioSeleccionado.id_usuario; // Agrega el ID del usuario al formulario
+    formData._id = this.usuarioSeleccionado._id; // Agrega el ID del usuario al formulario
 
-    this.usuarioService.updateUsuario(formData.id_usuario, formData).subscribe(
+    this.usuarioService.updateUsuario(formData._id, formData).subscribe(
       (response) => {
         console.log('Usuario actualizado exitosamente:', response);
         this.getUsuarios();
@@ -199,11 +210,11 @@ export class UsuariosComponent implements OnInit{
   confirmDelete() {
     if (
       this.usuarioSeleccionado &&
-      typeof this.usuarioSeleccionado.id_usuario === 'number'
+      typeof this.usuarioSeleccionado._id === 'string'
     ) {
       this.deleteUsuarioDialog = false;
 
-      this.usuarioService.deleteUsuario(this.usuarioSeleccionado.id_usuario).subscribe(
+      this.usuarioService.deleteUsuario(this.usuarioSeleccionado._id).subscribe(
         (response) => {
           console.log('Usuario eliminado exitosamente:', response);
           this.getUsuarios();

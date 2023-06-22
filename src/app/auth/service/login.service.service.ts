@@ -38,7 +38,7 @@ export class LoginServiceService {
     }
   }
 
-  //cerranis sesion y eliminamos el token del localStorage
+  //cerramos sesion y eliminamos el token del localStorage
   public logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('user');

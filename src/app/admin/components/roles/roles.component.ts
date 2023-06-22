@@ -33,7 +33,10 @@ export class RolesComponent {
   statuses: any[] = [];
 
 
-  valSwitch: boolean = false;
+  valSwitch: boolean = true;
+
+
+
 
   rowsPerPageOptions = [5, 10, 20];
   Rol: Rol = {
@@ -124,9 +127,9 @@ export class RolesComponent {
  
     const formData = this.RolsForm.value;
 
-    formData.id_rol = this.RolSeleccionado.id_rol; // Agrega el ID del Rol al formulario
+    formData.rolId = this.RolSeleccionado.id_rol; // Agrega el ID del Rol al formulario
 
-    this.rolService.updateRol(formData.id_Rol, formData).subscribe(
+    this.rolService.updateRol(formData.rolId, formData).subscribe(
       (response) => {
         console.log('Rol actualizado exitosamente:', response);
         this.getRols();
