@@ -66,8 +66,16 @@ export class LoginServiceService {
 
   public getUserRole(){
     let user = this.getUser();
-    return user.role;
+    return user.id_rol;
 
   }
+
+
+
+  // public getRoleById(roleId: string) {
+  //   return this.http.get(`${baserUrl}/roles/${roleId}`);
+  // }
+  
+
 
 }

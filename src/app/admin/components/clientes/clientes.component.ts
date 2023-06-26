@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
   styleUrls: ['./clientes.component.scss'],
-  providers: [MessageService]
+  // providers: [MessageService]
 })
 export class ClientesComponent implements OnInit {
   ClienteDialog: boolean = false;

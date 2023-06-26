@@ -57,12 +57,12 @@
                     </td>
                     <td style="width:14%; min-width:10rem;">
                       <span class="p-column-title">id_rol</span>
-                      {{ selectedRol?.nombre_rol }}
+                      {{ getRolName(Usuario.id_rol) }}
                     </td>
                     <td style="width:14%; min-width: 10rem;">
                       <span class="p-column-title">Estado</span>
-                      <span [class]="'Usuario-badge status-' + (Usuario.Estado ? Usuario.Estado.toLowerCase() : '')">{{ Usuario.estado === 1 ? "Activo" : "Inactivo"}}</span>
-                    </td>
+                      <span [class]="'Usuario-badge status-' + (Usuario.estado ? Usuario.estado.toString().toLowerCase() : '')">{{ Usuario.estado === 1 ? "Activo" : "Inactivo" }}</span>
+                    </td>                    
                     <td>
                       <div class="flex">
                         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editUsuario(Usuario)"></button>
@@ -110,7 +110,7 @@
 
 
                   <div class="form-group">
-                    <p-dropdown id="rol" name="rol" placeholder="Rol" formControlName="id_rol"
+                    <p-dropdown id="id_rol" name="id_rol" placeholder="Rol" formControlName="id_rol"
                       [options]="roles" optionLabel="nombre_rol" (onChange)="onRolChange($event)"></p-dropdown>
                   </div>
                   
@@ -177,7 +177,7 @@
          
 
               <div class="form-group">
-                <p-dropdown id="rol" name="rol" placeholder="Rol" formControlName="id_rol"
+                <p-dropdown id="id_rol" name="id_rol" placeholder="Rol" formControlName="id_rol"
                   [options]="roles" optionLabel="nombre_rol" (onChange)="onRolChange($event)"></p-dropdown>
               </div>
 

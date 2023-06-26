@@ -6,11 +6,10 @@ import { AdminGuard } from './auth/service/admin.guard';
 const routes: Routes = [
     {
           path: '', component: AppLayoutComponent,
-          // canActivate:[AdminGuard],
 
         children: [
-            { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
-            // { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.AuthModule) },
+          { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [AdminGuard] },
+          // { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.AuthModule) },
         ]
     },
     { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },

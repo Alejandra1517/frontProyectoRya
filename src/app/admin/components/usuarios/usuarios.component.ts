@@ -2,16 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { UsuarioService } from 'src/app/admin/service/usuarios.service';
-import { RolService } from 'src/app/admin/service/rol.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '../../models/usuarios';
+
+
+
+import { RolService } from 'src/app/admin/service/rol.service';
 
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.scss'],
-  providers: [MessageService]
+  // providers: [MessageService]
 })
 export class UsuariosComponent implements OnInit{
 
@@ -48,6 +51,10 @@ export class UsuariosComponent implements OnInit{
   ) {}
 
 
+
+  rolNames: { [key: string]: string } = {};
+
+
   roles: any[] = [];
   
   selectedRol: any;
@@ -55,10 +62,17 @@ export class UsuariosComponent implements OnInit{
 
   onRolChange(event: any) {
     this.selectedRol = event.value;
+    this.usuariosForm.patchValue({ id_rol: this.selectedRol.id_rol });
+    console.log('hello', this.selectedRol)
   }
   
-  ngOnInit() {
 
+
+  
+  
+  
+  ngOnInit() {
+    
 
     this.rolService.getRoles().subscribe(
       (data) => {
@@ -81,7 +95,8 @@ export class UsuariosComponent implements OnInit{
       { field: 'documento', header: 'Documento' },
       { field: 'telefono', header: 'Télefono' },
       { field: 'direccion', header: 'Dirección' },
-      { field: 'estado', header: 'Estado' }
+      { field: 'estado', header: 'Estado' },
+      { field: 'id_rol', header: 'Rol' }
   ];
 
     this.statuses = [
@@ -100,7 +115,16 @@ export class UsuariosComponent implements OnInit{
     });
   }
 
+
+  getRolName(id_rol: any): string {
+    const rol = this.roles.find((r: any) => r.id_rol === id_rol);
+    return rol ? rol.nombre_rol : '';
+  }
+  
+
   saveUsuario(): void {
+
+
     this.submitted = true;
 
     if (this.usuariosForm.invalid) {
@@ -108,6 +132,8 @@ export class UsuariosComponent implements OnInit{
     }
 
     const formData = this.usuariosForm.value;
+
+
     this.usuarioService.saveUsuario(formData).subscribe(
       (response) => {
         console.log('Usuario registrado exitosamente:', response);
@@ -165,6 +191,7 @@ export class UsuariosComponent implements OnInit{
   // }
 
   getUsuarios(): void {
+    
     this.usuarioService.getUsuarios().subscribe(
       (usuarios: Usuario[]) => {
         this.Usuarios = usuarios;
@@ -174,6 +201,7 @@ export class UsuariosComponent implements OnInit{
       }
     );
   }
+
 
 
 
@@ -197,7 +225,7 @@ export class UsuariosComponent implements OnInit{
         estado: usuario.estado,
       });
       this.submitted = false;
-      this.EditarUsuarioDialog = true; // Utiliza la propiedad correcta
+      this.EditarUsuarioDialog = true; 
     }
   }
 

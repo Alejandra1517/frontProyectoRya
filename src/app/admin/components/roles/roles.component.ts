@@ -9,7 +9,7 @@ import { Table } from 'primeng/table';
   selector: 'app-roles',
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.scss'],
-  providers: [MessageService]
+  // providers: [MessageService]
   
 })
 export class RolesComponent {

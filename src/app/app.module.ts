@@ -10,6 +10,7 @@ import { ClienteService } from './admin/service/cliente.service';
 import { ServicioServiceService } from './admin/service/servicio.service';
 import { EmpleadoService } from './admin/service/empleados.service';
 import { authInterceptorProviders } from './auth/service/auth.interceptor';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { authInterceptorProviders } from './auth/service/auth.interceptor';
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
         ProductService, ClienteService, ServicioServiceService, EmpleadoService,  
-        authInterceptorProviders
+        authInterceptorProviders, MessageService 
+
     ],
     bootstrap: [AppComponent]
 })

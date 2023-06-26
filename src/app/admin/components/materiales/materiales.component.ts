@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   selector: 'app-materiales',
   templateUrl: './materiales.component.html',
   styleUrls: ['./materiales.component.scss'],
-  providers: [MessageService]
+  // providers: [MessageService]
 
 })
 export class MaterialesComponent implements OnInit {

@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { RouterModule } from '@angular/router';
 import { SignupComponent } from './components/signup/signup.component';
+import { ToastModule } from 'primeng/toast';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { SignupComponent } from './components/signup/signup.component';
     CheckboxModule,
     InputTextModule,
     FormsModule,
+    ToastModule,
     PasswordModule,
     RouterModule.forChild([
       { path: 'login', component: LoginComponent },

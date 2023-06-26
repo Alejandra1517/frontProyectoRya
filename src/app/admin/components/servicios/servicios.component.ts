@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   selector: 'app-servicios',
   templateUrl: './servicios.component.html',
   styleUrls: ['./servicios.component.scss'],
-  providers: [MessageService]
+  // providers: [MessageService]
 })
 export class ServiciosComponent implements OnInit {
   ServicioDialog: boolean = false;

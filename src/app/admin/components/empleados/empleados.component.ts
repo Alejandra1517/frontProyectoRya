@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   selector: 'app-empleados',
   templateUrl: './empleados.component.html',
   styleUrls: ['./empleados.component.scss'],
-  providers: [MessageService]
+  // providers: [MessageService]
 })
 
 
