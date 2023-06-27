@@ -43,5 +43,11 @@ export class UsuarioService {
     return this.httpClient.delete<any>(url).pipe(map(resp => resp));
   }
 
+  deleteAllUsuarios(): Observable<any> {
+    const url = `${this.URL_API}/deleteAllUsuarios`;
+    return this.httpClient.delete<any>(url).pipe(map(resp => resp));
+  }
+  
+
 
 }

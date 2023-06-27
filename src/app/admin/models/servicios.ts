@@ -6,6 +6,6 @@ export interface Servicio {
     valor_unitario: number;
     estado: number;
     nombre_servicio: string;
-    imagen?: string;
+    imagen: string; // Tipo string para almacenar la ruta de la imagen
 }
 

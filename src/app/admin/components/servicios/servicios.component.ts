@@ -30,7 +30,7 @@ export class ServiciosComponent implements OnInit {
     categoria: 0,
     valor_unitario: 0,
     estado: 0,
-    imagen: '',
+    imagen: '', // Inicializa la propiedad de imagen como null
     descripcion: '',
   };
   ServiciosForm!: FormGroup;
@@ -43,6 +43,31 @@ export class ServiciosComponent implements OnInit {
     private messageService: MessageService,
     private formBuilder: FormBuilder
   ) {}
+
+  
+
+  handleImageUpload(event: any) {
+    const file = event.files[0];
+    // Aquí puedes acceder a los detalles de la imagen cargada, como el nombre, tamaño, tipo, etc.
+    console.log('Detalles de la imagen cargada:', file);
+
+
+    const formData = new FormData();
+    formData.append('image', file);
+  
+    fetch('/api/postServicio', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => {
+      // Manejar la respuesta del servidor aquí
+    })
+    .catch(error => {
+      // Manejar el error aquí
+    });
+  }
+  
+
 
   ngOnInit(): void {
     this.getServicios();
@@ -78,13 +103,14 @@ export class ServiciosComponent implements OnInit {
       categoria: ['', Validators.required],
       valor_unitario: ['', Validators.required],
       estado: ['1', Validators.required],
+      imagenInput: [''],
       descripcion: ['',],
     });
   }
 
   saveServicio(): void {
     this.submitted = true;
-    this.Servicio.imagen = 'product-placeholder.svg';
+    // this.Servicio.imagen = 'product-placeholder.svg';
   
     if (this.ServiciosForm.invalid) {
       return;
@@ -95,7 +121,9 @@ export class ServiciosComponent implements OnInit {
     if (!formData.descripcion) {
       formData.descripcion = 'Sin descripción';
     }
-  
+    
+
+
     this.servicioServiceService.saveServicio(formData).subscribe(
       (response) => {
         console.log('Servicio registrado exitosamente:', response);
@@ -121,6 +149,7 @@ export class ServiciosComponent implements OnInit {
     const formData = this.ServiciosForm.value;
 
     formData.id_Servicio = this.ServicioSeleccionado._id; // Agrega el ID del Servicio al formulario
+
 
     this.servicioServiceService.updateServicio(formData.id_Servicio, formData).subscribe(
       (response) => {

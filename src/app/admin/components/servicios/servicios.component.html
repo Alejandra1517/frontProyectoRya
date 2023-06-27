@@ -101,13 +101,8 @@
               <span class="p-column-title">nombre_servicio</span>
               {{ Servicio.nombre_servicio }}
             </td>
-            <td style="width: 14%; min-width: 10rem">
-              <span class="p-column-title">Image</span>
-              <img
-                [src]="'assets/demo/images/product/' + Servicio.imagen"
-                width="100"
-                class="shadow-4"
-              />
+            <td>
+              <img [src]="'http://localhost:8081/uploads/' + Servicio.imagen" alt="Image">
             </td>
             <td style="width: 14%; min-width: 10rem">
               <span class="p-column-title">Descripción</span>
@@ -135,6 +130,7 @@
               <span class="p-column-title">Estado</span>
               <span [class]="'Servicio-badge status-' + (Servicio.Estado ? Servicio.Estado.toString().toLowerCase() : '')">{{ Servicio.estado === 1 ? "Activo" : "Inactivo"}}</span>
             </td>
+
             <td>
               <div class="flex">
                 <button
@@ -157,6 +153,9 @@
         </ng-template>
       </p-table>
     </div>
+
+
+
 
     <!--Guardar Servicio-->
     <p-dialog
@@ -214,6 +213,8 @@
           </div>
 
           <div class="formgroup-inline mb-3">
+           
+            
             <div class="field">
                 <p-inputNumber
                 placeholder="Valor unitario"
@@ -252,6 +253,16 @@
                 Este campo es obligatorio.
               </div>
             </div>
+
+            <p-fileUpload
+            mode="basic"
+            accept="image/*"
+            [maxFileSize]="1000000"
+            label="Importar imagen"
+            chooseLabel="Seleccionar imagen"
+            class="mr-2 inline-block"
+            (onUpload)="handleImageUpload($event)"
+          ></p-fileUpload>
           </div>
 
           <div class="field">
@@ -298,7 +309,7 @@
     >
       <ng-template pTemplate="content">
         <form [formGroup]="ServiciosForm">
-          <div class="formgroup-inline">
+          <div class="formgroup-inline mb-3">
             <div class="field">
               <input
                 type="text"
@@ -342,7 +353,7 @@
             </div>
           </div>
 
-          <div class="formgroup-inline">
+          <div class="formgroup-inline mb-3">
             <div class="field">
                 <p-inputNumber
                 placeholder="Valor unitario"
@@ -372,6 +383,16 @@
                 placeholder="Seleccionar estado"
               ></p-dropdown>
             </div>
+
+            <p-fileUpload
+            mode="basic"
+            accept="image/*"
+            [maxFileSize]="1000000"
+            label="Importar imagen"
+            chooseLabel="Seleccionar imagen"
+            class="mr-2 inline-block"
+            (onUpload)="handleImageUpload($event)"
+          ></p-fileUpload>
           </div>
 
           <div class="field">

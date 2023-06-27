@@ -31,6 +31,9 @@ export class UsuariosComponent implements OnInit{
     _id: '',
     username: '',
     nombre_completo: '',
+    documento: '',
+    telefono: '',
+    direccion: '',
     password: '',
     estado: 0,
     id_rol: ''
@@ -67,9 +70,19 @@ export class UsuariosComponent implements OnInit{
   }
   
 
+  selectAll: boolean = false;
 
   
-  
+  toggleSelectAll() {
+    if (this.selectedUsuarios.length === this.Usuarios.length) {
+        this.selectedUsuarios = [];
+        this.selectAll = false;
+    } else {
+        this.selectedUsuarios = [...this.Usuarios];
+        this.selectAll = true;
+    }
+}
+
   
   ngOnInit() {
     
@@ -109,6 +122,9 @@ export class UsuariosComponent implements OnInit{
     this.usuariosForm = this.formBuilder.group({
       username: ['', Validators.required],
       nombre_completo: ['', Validators.required],
+      documento: ['', Validators.required],
+      telefono: ['', Validators.required],
+      direccion: ['', Validators.required],
       password: ['', Validators.required],
       estado: ['1', Validators.required],
       id_rol: ['', Validators.required]
@@ -221,6 +237,9 @@ export class UsuariosComponent implements OnInit{
       this.usuariosForm.patchValue({
         username: usuario.username,
         nombre_completo: usuario.nombre_completo,
+        documento: usuario.documento,
+        telefono: usuario.telefono,
+        direccion: usuario.direccion,
         password: usuario.password,
         estado: usuario.estado,
       });
@@ -234,6 +253,21 @@ export class UsuariosComponent implements OnInit{
     this.usuarioSeleccionado = usuario;
     this.deleteUsuarioDialog = true;
   }
+
+
+  deleteAllUsuarios() {
+    this.usuarioService.deleteAllUsuarios().subscribe(
+      (response) => {
+        // Aquí puedes manejar la respuesta exitosa del servidor
+        console.log(response);
+      },
+      (error) => {
+        // Aquí puedes manejar el error en caso de que ocurra
+        console.error(error);
+      }
+    );
+  }
+  
 
   confirmDelete() {
     if (
