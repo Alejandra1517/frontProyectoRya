@@ -97,4 +97,18 @@ export class LayoutService {
         this.configUpdate.next(this.config);
     }
 
+
+    public getUser(){
+        let userStr = localStorage.getItem('user');
+        if(userStr != null){
+          return JSON.parse(userStr);
+        }
+      }
+    
+      public getUserRole(){
+        let user = this.getUser();
+        return user.id_rol;
+    
+      }
+
 }

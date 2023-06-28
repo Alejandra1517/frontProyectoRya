@@ -43,7 +43,6 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     ServiciosComponent,
     MaterialesComponent,
     EmpleadosComponent,
-    SolicitudesComponent,
     CotizacionesComponent,
     ObrasComponent,
     RolesComponent
@@ -76,7 +75,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
       { path: 'solicitudes', component: SolicitudesComponent },
       { path: 'cotizaciones', component: CotizacionesComponent },
       { path: 'obras', component: ObrasComponent },
-      { path: 'crud', component: CrudComponent },
+      { path: 'crud', component: CrudComponent }
     ])
   ]
 })

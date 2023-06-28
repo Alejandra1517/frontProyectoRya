@@ -7,22 +7,24 @@ import { LoginServiceService } from './login.service.service';
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-
-  
-
-  constructor(private loginService:LoginServiceService,private router:Router){
-
-  }
+  constructor(private loginService: LoginServiceService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(this.loginService.isLoggedIn() && this.loginService.getUserRole() == '6498c9e9f556bfabc8c92075'){
-      return true;
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (this.loginService.isLoggedIn() && this.loginService.getToken()) {
+      const userRole = this.loginService.getUserRole();
+
+      if (userRole === '649c4e46ef2c0bda10cf8322' || userRole === '649c15b61bd2c95b8ec5132b') {
+        return true; // Usuario válido para acceder a la ruta protegida
+      } else {
+        // Redirigir al usuario a una página de acceso no autorizado
+        return this.router.createUrlTree(['/unauthorized']);
+      }
     }
 
-    this.router.navigate(['login']);
-    return false;
+    // El usuario no está autenticado o no ha generado el token, redirigir a la página de inicio de sesión
+    return this.router.createUrlTree(['/login']);
   }
-  
 }

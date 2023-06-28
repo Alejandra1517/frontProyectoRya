@@ -28,6 +28,9 @@ export class LoginComponent implements OnInit {
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
   }
+
+  public modulos: any = {};
+
   
 
     valCheck: string[] = ['remember'];
@@ -74,13 +77,13 @@ export class LoginComponent implements OnInit {
             this.loginService.setUser(user);
             console.log(user);
 
-            if (this.loginService.getUserRole() === '6498c9e9f556bfabc8c92075') {
+            if (this.loginService.getUserRole() === '649c4e46ef2c0bda10cf8322') {
               console.log("Administrador");
               this.router.navigate(['/']);
               this.loginService.loginStatusSubject.next(true);
-            } else if (this.loginService.getUserRole() === '64927ce3f067c6967f3596d2') {
+            } else if (this.loginService.getUserRole() === '649c15b61bd2c95b8ec5132b') {
               console.log("Cliente");
-              // this.router.navigate(['customer']);
+              this.router.navigate(['/']);
               this.loginService.loginStatusSubject.next(true);
             } else {
               this.loginService.logout();
@@ -97,6 +100,7 @@ export class LoginComponent implements OnInit {
         }
       }
     );
+
   }
 
   

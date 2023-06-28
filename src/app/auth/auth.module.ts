@@ -10,6 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { RouterModule } from '@angular/router';
 import { SignupComponent } from './components/signup/signup.component';
 import { ToastModule } from 'primeng/toast';
+import { MaterialesComponent } from '../admin/components/materiales/materiales.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ToastModule } from 'primeng/toast';
     RouterModule.forChild([
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignupComponent }
+
     ])
   ]
 })

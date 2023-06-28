@@ -43,6 +43,15 @@ export class RolesComponent {
     id_rol: '',
     nombre_rol: '',
     estado: 0,
+    configuracion: false,
+    usuarios: false,
+    materiales: false,
+    servicios: false,
+    empleados: false,
+    clientes: false,
+    solicitudes: false,
+    cotizaciones: false,
+    obras: false
   };
 
 
@@ -60,6 +69,8 @@ export class RolesComponent {
     private messageService: MessageService,
     private formBuilder: FormBuilder
   ) {}
+
+
 
   ngOnInit(): void {
     this.getRols();
@@ -91,6 +102,8 @@ export class RolesComponent {
     });
   }
 
+  
+
   saveRol(): void {
     this.submitted = true;
 
@@ -102,6 +115,17 @@ export class RolesComponent {
     const formData = this.RolsForm.value;
   
    
+    this.Rol.configuracion = formData.configuracion;
+    this.Rol.usuarios = formData.usuarios;
+    this.Rol.materiales = formData.materiales;
+    this.Rol.servicios = formData.servicios;
+    this.Rol.empleados = formData.empleados;
+    this.Rol.clientes = formData.clientes;
+    this.Rol.solicitudes = formData.solicitudes;
+    this.Rol.cotizaciones = formData.cotizaciones;
+    this.Rol.obras = formData.obras;
+
+
   
     this.rolService.saveRol(formData).subscribe(
       (response) => {
