@@ -1,3 +1,5 @@
+
+
 import { Component, OnInit } from '@angular/core';
 import { Solicitud } from 'src/app/admin/models/solicitud';
 import { MessageService } from 'primeng/api';
@@ -7,11 +9,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-solicitudes',
-  templateUrl: './solicitudes.component.html',
-  styleUrls: ['./solicitudes.component.scss']
+  selector: 'app-modificar-solicitud',
+  templateUrl: './modificar-solicitud.component.html',
+  styleUrls: ['./modificar-solicitud.component.scss']
 })
-export class SolicitudesComponent implements OnInit {
+export class ModificarSolicitudComponent implements OnInit {
 
   SolicitudDialog: boolean = false;
 
@@ -180,7 +182,7 @@ export class SolicitudesComponent implements OnInit {
     this.deleteSolicitudesDialog = true;
   }
 
-  editSolicitud(Solicitud: Solicitud) {
+  editServicioMaterial(Solicitud: Solicitud) {
     if (Solicitud) {
       this.SolicitudSeleccionado = Solicitud;
       this.SolicitudesForm.patchValue({
@@ -193,10 +195,9 @@ export class SolicitudesComponent implements OnInit {
         estado_solicitud: Solicitud.estado_solicitud,
         fecha_envio: Solicitud.fecha_envio
       });
+
       this.submitted = false;
       this.EditarSolicitudDialog = true; // Utiliza la propiedad correcta
-
-      this.router.navigate(['/admin/modificar-solicitud']);
 
     }
   }

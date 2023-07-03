@@ -28,11 +28,14 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { ServiciosComponent } from './components/servicios/servicios.component';
 import { MaterialesComponent } from './components/materiales/materiales.component';
 import { EmpleadosComponent } from './components/empleados/empleados.component';
-import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 import { CotizacionesComponent } from './components/cotizaciones/cotizaciones.component';
 import { ObrasComponent } from './components/obras/obras.component';
 import { RolesComponent } from './components/roles/roles.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
+import { ModificarSolicitudComponent } from './components/modificar-solicitud/modificar-solicitud.component';
+import { AgregarmaterialSolicitudComponent } from './components/agregarmaterial-solicitud/agregarmaterial-solicitud.component';
+import { CalendarModule } from 'primeng/calendar';
 
 
 @NgModule({
@@ -45,10 +48,14 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     EmpleadosComponent,
     CotizacionesComponent,
     ObrasComponent,
-    RolesComponent
+    RolesComponent,
+    SolicitudesComponent,
+    ModificarSolicitudComponent,
+    AgregarmaterialSolicitudComponent
   ],
   imports: [
     CommonModule,
+    CalendarModule,
     TableModule,
     ReactiveFormsModule,
     FileUploadModule,
@@ -73,6 +80,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
       { path: 'materiales', component: MaterialesComponent },
       { path: 'empleados', component: EmpleadosComponent },
       { path: 'solicitudes', component: SolicitudesComponent },
+      { path: 'modificar-solicitud', component: ModificarSolicitudComponent },
+      { path: 'agregarmaterial-solicitud', component: AgregarmaterialSolicitudComponent },
       { path: 'cotizaciones', component: CotizacionesComponent },
       { path: 'obras', component: ObrasComponent },
       { path: 'crud', component: CrudComponent }

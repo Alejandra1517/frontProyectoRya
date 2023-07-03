@@ -4,11 +4,11 @@ import { AppLayoutComponent } from './layout/app.layout.component';
 import { AdminGuard } from './auth/service/admin.guard';
 
 const routes: Routes = [
-    {
-          path: '', component: AppLayoutComponent, canActivate: [AdminGuard],
+    {  // canActivate: [AdminGuard],
+          path: '', component: AppLayoutComponent,
 
         children: [
-          { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [AdminGuard] },
+          { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
           // { path: 'customer', loadChildren: () => import('./customer/customer.module').then(m => m.AuthModule) },
         ]
     },

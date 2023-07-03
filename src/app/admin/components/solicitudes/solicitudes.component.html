@@ -1,4 +1,4 @@
-<!-- <div class="grid">
+<div class="grid">
     <div class="col-12">
       <div class="card px-6 py-6">
         <p-toast></p-toast>
@@ -8,57 +8,57 @@
               <button
                 pButton
                 pRipple
-                label="Registrar solicitud"
+                label="Registrar Solicitud"
                 icon="pi pi-plus"
                 class="p-button-success mr-2"
                 (click)="openNew()"
-              ></button> -->
-              <!-- <button
+              ></button>
+              <button
                 pButton
                 pRipple
                 label="Eliminar"
                 icon="pi pi-trash"
                 class="p-button-danger"
-                (click)="deleteSelectedsolicitud()"
-                [disabled]="!selectedsolicitud || !selectedsolicitud.length"
+                (click)="deleteselectedSolicitudes()"
+                [disabled]="!selectedSolicitudes || !selectedSolicitudes.length"
               ></button>
             </div>
-          </ng-template> -->
+          </ng-template>
   
-          <!-- <ng-template pTemplate="right"> -->
+          <ng-template pTemplate="right">
             <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
-            <!-- <button
+            <button
               pButton
               pRipple
               label="Descargar informe"
               icon="pi pi-upload"
               class="p-button-help"
-            ></button> -->
+            ></button>
             <!--(click)="dt.exportCSV()-->
-          <!-- </ng-template>
-        </p-toolbar> -->
+          </ng-template>
+        </p-toolbar>
   
-        <!-- <p-table -->
-          <!-- #dt
-          [value]="solicituds"
+        <p-table
+          #dt
+          [value]="Solicituds"
           [columns]="cols"
           responsiveLayout="scroll"
           [rows]="10"
-          [globalFilterFields]="['nombre_solicitud', 'categoria']"
+          [globalFilterFields]="['nombre_cliente', 'categoria']"
           [paginator]="true"
           [rowsPerPageOptions]="[10, 20, 30]"
           [showCurrentPageReport]="true"
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
-          [(selection)]="selectedsolicitud"
+          [(selection)]="selectedSolicitudes"
           selectionMode="multiple"
           [rowHover]="true"
           dataKey="id"
-        > -->
-          <!-- <ng-template pTemplate="caption">
+        >
+          <ng-template pTemplate="caption">
             <div
               class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
             >
-              <h5 class="m-0">solicitudes Registrados</h5>
+              <h5 class="m-0">solicitudes registradas</h5>
               <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input
@@ -76,26 +76,50 @@
               <th style="width: 3rem">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
               </th>
-              <th>Nombre solicitud</th>
-              <th>Proveedor</th>
+              <th>Nombre cliente</th>
               <th pSortableColumn="estado">Estado</th>
-              <th pSortableColumn="fecha registro">
-              </th>
+              <th>Fecha de envío</th>
               <th></th>
             </tr>
           </ng-template>
-          <ng-template pTemplate="body" let-solicitud>
+          <ng-template pTemplate="body" let-Solicitud>
             <tr>
               <td>
                 <p-tableCheckbox
-                  [value]="solicitud"
+                  [value]="Solicitud"
                   binary="true"
                 ></p-tableCheckbox>
               </td>
               <td style="width: 14%; min-width: 10rem">
-                <span class="p-column-title">nombre_cliente
-                </span>
-                {{ solicitud.nombre_cliente  }}
+                <span class="p-column-title">nombre_cliente</span>
+                {{ Solicitud.nombre_cliente }}
+              </td>
+              <td style="width: 14%; min-width: 10rem">
+                <span class="p-column-title">Estado</span>
+                <span [class]="'Solicitud-badge status-' + (Solicitud.estado ? Solicitud.estado.toString().toLowerCase() : '')">{{ Solicitud.estado === 1 ? "Disponible" : "Agotado"}}</span>
+              </td>
+              <td style="width: 14%; min-width: 8rem">
+                <span class="p-column-title">fecha_envio</span>
+                {{ Solicitud.fecha_envio }}
+              </td>
+
+              <td>
+                <div class="flex">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-success mr-2"
+                    (click)="editSolicitud(Solicitud)"
+                  ></button>
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-warning"
+                    (click)="deleteSolicitud(Solicitud)"
+                  ></button>
+                </div>
               </td>
             </tr>
           
@@ -104,9 +128,10 @@
       </div>
   
   
-  
+     
+  <!--Eliminar-->
       <p-dialog
-        [(visible)]="deletesolicitudDialog"
+        [(visible)]="deleteSolicitudDialog"
         header="Confirmación"
         [modal]="true"
         [style]="{ width: '450px' }"
@@ -122,7 +147,7 @@
             icon="pi pi-times"
             class="p-button-text"
             label="No"
-            (click)="deletesolicitudDialog = false"
+            (click)="deleteSolicitudDialog = false"
           ></button>
           <button
             pButton
@@ -136,7 +161,7 @@
       </p-dialog>
   
       <p-dialog
-        [(visible)]="deletesolicitudDialog"
+        [(visible)]="deleteSolicitudesDialog"
         header="Confirmación"
         [modal]="true"
         [style]="{ width: '450px' }"
@@ -152,7 +177,7 @@
             icon="pi pi-times"
             class="p-button-text"
             label="No"
-            (click)="deletesolicitudDialog = false"
+            (click)="deleteSolicitudesDialog = false"
           ></button>
           <button
             pButton
@@ -166,4 +191,4 @@
       </p-dialog>
     </div>
   </div>
-   -->
+  

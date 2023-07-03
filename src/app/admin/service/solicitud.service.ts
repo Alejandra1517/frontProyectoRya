@@ -16,7 +16,7 @@ export class Solicitudeservice {
 
     getSolicitudes(): Observable<Solicitud[]> {
       return this.httpClient.get<any>(`${this.URL_API}/getSolicitudes`).pipe(
-        map(response => response.Solicitudes)
+        map(response => response.solicitudes)
       );
     }
 

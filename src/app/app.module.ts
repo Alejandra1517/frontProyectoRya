@@ -17,6 +17,7 @@ import { RolService } from './admin/service/rol.service';
 import { LoginServiceService } from './auth/service/login.service.service';
 import { RouterModule } from '@angular/router';
 import { AdminGuard } from './auth/service/admin.guard';
+import { Solicitudeservice } from './admin/service/solicitud.service';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,7 @@ import { AdminGuard } from './auth/service/admin.guard';
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy  },
-        ProductService, ClienteService, ServicioServiceService, EmpleadoService, UsuarioService, RolService,LoginServiceService,
+        ProductService, ClienteService, ServicioServiceService, EmpleadoService, UsuarioService, RolService,LoginServiceService, Solicitudeservice,
         authInterceptorProviders, MaterialService, MessageService, AdminGuard
 
     ],
