@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Solicitud } from 'src/app/admin/models/solicitud';
 import { MessageService } from 'primeng/api';
@@ -6,12 +7,13 @@ import { Solicitudeservice } from 'src/app/admin/service/solicitud.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+
 @Component({
-  selector: 'app-modificar-solicitud',
-  templateUrl: './modificar-solicitud.component.html',
-  styleUrls: ['./modificar-solicitud.component.scss']
+  selector: 'app-crear-cotizacion',
+  templateUrl: './crear-cotizacion.component.html',
+  styleUrls: ['./crear-cotizacion.component.scss']
 })
-export class ModificarSolicitudComponent implements OnInit {
+export class CrearCotizacionComponent implements OnInit {
 
   SolicitudDialog: boolean = false;
 
@@ -257,4 +259,5 @@ export class ModificarSolicitudComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
 }

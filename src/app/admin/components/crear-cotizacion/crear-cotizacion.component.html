@@ -1,0 +1,421 @@
+<div class="col-12">
+    <div class="card">
+        <h5>Crear cotización</h5>
+        <div class="card">
+            <div class="grid p-fluid mt-3">
+                <style>
+                    /* Estilos para el contenedor del texto y el input */
+                    .text-input-container {
+                      display: flex;
+                      align-items: center;
+                    }
+                  
+                    /* Estilos para el texto */
+                    .input-text {
+                      margin-right: 15px;
+                      font-weight: bold;
+                    }
+                  </style>
+                  
+                  <div class="field col-12 md:col-12">
+                    <div class="text-input-container">
+                      <span class="input-text">Solicitud del cliente</span>
+                      <span class="p-float-label">
+                        <input type="text" id="inputtext" pInputText disabled class="disabled-input">
+                        <label for="inputtext">Nombre</label>
+                      </span>
+                    </div>
+                  </div>
+
+                <style>
+                    /* Estilos para el campo deshabilitado */
+                    .disabled-input {
+                      background-color: #f2f2f2; /* Color de fondo */
+                      color: #a0a0a0; /* Color del texto */
+                      cursor: not-allowed; /* Cambia el cursor a "no permitido" */
+                    }
+                  </style>
+                  
+                  <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                      <input type="text" id="inputtext" pInputText disabled class="disabled-input">
+                      <label for="inputtext">subtotal: </label>
+                    </span>
+                  </div>
+                                    
+                <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                        <p-calendar inputId="calendar"></p-calendar>
+                        <label for="calendar">Fecha de vencimiento</label>
+                    </span>
+                </div>
+                <div class="field col-12 md:col-4 mb-5">
+                    <span class="p-float-label p-input-icon-right">
+                        <input type="text" id="righticon" pInputText>
+                        <label for="righticon">Mano de obra</label>
+                    </span>
+                </div>
+
+                </div>
+                
+            </div>
+
+              <p-footer>
+                <div class="flex justify-content-end text-end">
+                  <button pButton pRipple type="button" label="Cancelar" class="mr-2 p-button-danger"></button>
+                  <button pButton pRipple type="button" label="Enviar cotización" class="p-button-info"></button>
+                </div>
+              </p-footer>
+            
+        </div>
+    </div>
+
+
+    <div class="col-12">
+        <div class="card">
+            <h5>Agregar servicio cotización</h5>
+
+        <div class="card">
+            <div class="grid p-fluid mt-3">
+             
+                <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                        <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
+                        <label for="dropdown">Categoría de servicio</label>
+                    </span>
+                </div>
+
+                <div class="field col-12 md:col-4">
+                    <span class="p-float-label">
+                        <p-dropdown inputId="dropdown" [autoDisplayFirst]="false" optionLabel="name"></p-dropdown>
+                        <label for="dropdown">Servicio</label>
+                    </span>
+                </div>
+              
+                <div class="field col-12 md:col-4 mb-5">
+                    <span class="p-float-label p-input-icon-right">
+                        <input type="text" id="righticon" pInputText>
+                        <label for="righticon">Otro</label>
+                    </span>
+                </div>
+
+                </div>
+
+                <div class="grid p-fluid mt-3">
+             
+               
+                  
+                    <div class="field col-12 md:col-4 mb-5">
+                        <span class="p-float-label p-input-icon-right">
+                            <input type="text" id="righticon" pInputText>
+                            <label for="righticon">Cantidad</label>
+                        </span>
+                    </div>
+
+                    <div class="field col-12 md:col-6">
+                        <span class="p-float-label">
+                            <textarea inputId="textarea" rows="3" cols="30" pInputTextarea></textarea>
+                            <label for="textarea">Descripción</label>
+                        </span>
+                    </div>
+    
+                    </div>
+        </div>
+
+        <p-footer>
+            <div class="flex justify-content-end text-end">
+              <button pButton pRipple type="button" label="Agregar servicio" class="mr-2 p-button-info"></button>
+              <button pButton pRipple type="button" label="Volver" class="p-button-secondary"></button>
+            </div>
+          </p-footer>
+    </div>
+
+    
+
+</div>
+    
+
+<div class="col-12">
+    <div class="card">
+        <h5>Servicios</h5>
+
+        <p-table
+                  #dt
+                  [value]="Solicituds"
+                  [columns]="cols"
+                  responsiveLayout="scroll"
+                  [rows]="4"
+                  [globalFilterFields]="['servicio']"
+                  [rowsPerPageOptions]="[10, 20, 30]"
+                  [showCurrentPageReport]="true"
+                  [(selection)]="selectedSolicitudes"
+                  [rowHover]="true"
+                  dataKey="id">
+          <ng-template pTemplate="caption">
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar ..." class="w-full sm:w-auto" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 10%; min-width: 10rem">Servicio</th>
+              <th style="width: 10%; min-width: 10rem">Cantidad</th>
+              <th style="width: 10%; min-width: 10rem">Descripción</th>
+              <th style="width: 10%; min-width: 10rem">Agregar material</th>
+              <th style="width: 10%; min-width: 10rem">Total servicio</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-Solicitud>
+            <tr [class.p-highlight]="selectedSolicitudes.includes(Solicitud)">
+              <td class="p-cell-editing">
+                <span class="p-column-title">nombre_cliente</span>
+                {{ Solicitud.nombre_cliente }}
+              </td>
+              <td class="p-cell-editing" style="width: 14%; min-width: 10rem">
+                <span class="p-column-title">Estado</span>
+                <span [class]="'Solicitud-badge status-' + (Solicitud.estado ? Solicitud.estado.toString().toLowerCase() : '')">{{ Solicitud.estado === 1 ? "Disponible" : "Agotado"}}</span>
+              </td>
+              <td class="p-cell-editing" style="width: 14%; min-width: 10rem">
+                <span class="p-column-title">fecha_envio</span>
+                {{ Solicitud.fecha_envio }}
+              </td>
+              <td class="p-cell-editing" style="width: 14%; min-width: 10rem">
+                <span class="p-column-title">material</span>
+                <button pButton pRipple class="p-button-rounded p-button-info" icon="pi pi-plus" (click)="openNew()"></button>
+              </td>
+              <td class="p-cell-editing" style="width: 14%; min-width: 10rem">
+                <span class="p-column-title">total_servicio</span>
+                {{ Solicitud.total_servicio }}
+              </td>
+
+              <td>
+                <div class="flex">
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-pencil"
+                    class="p-button-rounded p-button-success mr-2"
+                    (click)="editServicioMaterial(Solicitud)"
+                  ></button>
+                  <button
+                    pButton
+                    pRipple
+                    icon="pi pi-trash"
+                    class="p-button-rounded p-button-warning"
+                    (click)="deleteSolicitud(Solicitud)"
+                  ></button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+</div>
+
+
+
+</div>
+
+
+
+<!--Agregar materiales-->
+<p-dialog
+[(visible)]="SolicitudDialog"
+[style]="{ width: '750px', height: '480px' }"
+header="Agregar materiales"
+[modal]="true"
+class="p-fluid"
+>
+<ng-template pTemplate="content">
+<form [formGroup]="SolicitudesForm">
+  <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center mb-5 mt-3">
+    <span class="block mt-2 md:mt-0 p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar ..." class="w-full sm:w-auto" />
+    </span>
+  </div>
+
+  <p-table class="mt-5"
+    #dt
+    [value]="Solicituds"
+    [columns]="cols"
+    responsiveLayout="scroll"
+    [rows]="4"
+    [globalFilterFields]="['servicio']"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    [showCurrentPageReport]="true"
+    [(selection)]="selectedSolicitudes"
+    [rowHover]="true"
+    dataKey="id"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 10%; min-width: 10rem">Nombre material</th>
+        <th style="width: 10%; min-width: 10rem">Cantidad</th>
+        <th style="width: 10%; min-width: 10rem">Valor unitario</th>
+        <th style="width: 10%; min-width: 10rem">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-Solicitud>
+      <tr [class.p-highlight]="selectedSolicitudes.includes(Solicitud)">
+        <td class="p-cell-editing">
+          <span class="p-column-title">nombre_cliente</span>
+          {{ Solicitud.nombre_cliente }}
+        </td>
+        <td class="p-cell-editing" style="width: 14%; min-width: 10rem">
+          <span class="p-column-title">Estado</span>
+          <span [class]="'Solicitud-badge status-' + (Solicitud.estado ? Solicitud.estado.toString().toLowerCase() : '')">{{ Solicitud.estado === 1 ? "Disponible" : "Agotado"}}</span>
+        </td>
+        <td class="p-cell-editing" style="width: 14%; min-width: 10rem">
+          <span class="p-column-title">fecha_envio</span>
+          {{ Solicitud.fecha_envio }}
+        </td>
+        <td>
+            <p-tableCheckbox
+              [value]="Solicitud"
+              binary="true"
+            ></p-tableCheckbox>
+          </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</form>
+</ng-template>
+<ng-template pTemplate="footer">
+<div class="p-dialog-footer">
+  <button
+    pButton
+    pRipple
+    label="Cancelar"
+    icon="pi pi-times"
+    class="p-button-text"
+    (click)="hideDialog()"
+  ></button>
+  <button
+    pButton
+    pRipple
+    label="Agregar"
+    icon="pi pi-check"
+    class="p-button-text"
+    (click)="saveSolicitud()"
+  ></button>
+</div>
+</ng-template>
+</p-dialog>
+
+
+
+<!--modificar servicio solicitud-->
+<p-dialog
+  [(visible)]="EditarSolicitudDialog"
+  [style]="{ width: '480px' }"
+  header="Modificar servicio"
+  [modal]="true"
+  class="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="SolicitudesForm">
+        <div class="formgroup-inline mb-3">
+          <div class="field">
+              <p-dropdown
+                formControlName="categoria_servicio"
+                id="categoria_servicio"
+                [options]="Solicituds"
+                placeholder="Categoría servicio"
+                [ngClass]="{
+                  'p-invalid':
+                    submitted && SolicitudesForm.get('categoria_servicio')?.invalid
+                }"
+              ></p-dropdown>
+              <div
+                *ngIf="submitted && SolicitudesForm.get('categoria_servicio')?.invalid"
+                class="p-error"
+              >
+                Este campo es obligatorio.
+              </div>
+          </div>
+        <div class="field">
+          <p-dropdown
+            formControlName="servicio"
+            id="servicio"
+            [options]="Solicituds"
+            placeholder="Servicio"
+            [ngClass]="{
+              'p-invalid':
+                submitted && SolicitudesForm.get('servicio')?.invalid
+            }"
+          ></p-dropdown>
+          <div
+            *ngIf="submitted && SolicitudesForm.get('servicio')?.invalid"
+            class="p-error"
+          >
+            Este campo es obligatorio.
+          </div>
+        </div>
+      </div>
+
+      <div class="formgroup-inline mb-3">
+        <div class="field">
+            <p-inputNumber
+            placeholder="cantidad"
+            id="cantidad"
+            formControlName="cantidad"
+          ></p-inputNumber>
+          
+          <div
+            *ngIf="
+              submitted && SolicitudesForm.get('cantidad')?.invalid
+            "
+            class="p-error"
+          >
+            Este campo es obligatorio.
+          </div>
+        </div>
+        
+
+      </div>
+
+      <div class="formgroup-inline mb-3">
+        <div class="field">
+                    <textarea
+                      id="descripcion"
+                      placeholder="Descripción"
+                      pInputTextarea
+                      formControlName="descripcion"
+                      rows="3"
+                      cols="50"
+                    ></textarea>
+        </div>
+
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="p-dialog-footer">
+      <button
+        pButton
+        pRipple
+        label="Cancelar"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Guardar"
+        icon="pi pi-check"
+        class="p-button-text"
+        [disabled]="SolicitudesForm.invalid"
+        (click)="updateSolicitud()"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+
+
+

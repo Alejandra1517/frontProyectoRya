@@ -7,11 +7,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-modificar-solicitud',
-  templateUrl: './modificar-solicitud.component.html',
-  styleUrls: ['./modificar-solicitud.component.scss']
+  selector: 'app-modificar-cotizacion',
+  templateUrl: './modificar-cotizacion.component.html',
+  styleUrls: ['./modificar-cotizacion.component.scss']
 })
-export class ModificarSolicitudComponent implements OnInit {
+export class ModificarCotizacionComponent implements OnInit {
 
   SolicitudDialog: boolean = false;
 
@@ -257,4 +257,5 @@ export class ModificarSolicitudComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
 }

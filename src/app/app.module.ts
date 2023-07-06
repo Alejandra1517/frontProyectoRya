@@ -18,6 +18,8 @@ import { LoginServiceService } from './auth/service/login.service.service';
 import { RouterModule } from '@angular/router';
 import { AdminGuard } from './auth/service/admin.guard';
 import { Solicitudeservice } from './admin/service/solicitud.service';
+import { cotizacionservice } from './admin/service/cotizacion.service';
+import { Obraservice } from './admin/service/obra.service';
 
 @NgModule({
     declarations: [
@@ -30,7 +32,7 @@ import { Solicitudeservice } from './admin/service/solicitud.service';
     ],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy  },
-        ProductService, ClienteService, ServicioServiceService, EmpleadoService, UsuarioService, RolService,LoginServiceService, Solicitudeservice,
+        ProductService, ClienteService, ServicioServiceService, EmpleadoService, UsuarioService, RolService,LoginServiceService, Solicitudeservice, cotizacionservice, Obraservice,
         authInterceptorProviders, MaterialService, MessageService, AdminGuard
 
     ],

@@ -34,8 +34,9 @@ import { RolesComponent } from './components/roles/roles.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 import { ModificarSolicitudComponent } from './components/modificar-solicitud/modificar-solicitud.component';
-import { AgregarmaterialSolicitudComponent } from './components/agregarmaterial-solicitud/agregarmaterial-solicitud.component';
 import { CalendarModule } from 'primeng/calendar';
+import { CrearCotizacionComponent } from './components/crear-cotizacion/crear-cotizacion.component';
+import { ModificarCotizacionComponent } from './components/modificar-cotizacion/modificar-cotizacion.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { CalendarModule } from 'primeng/calendar';
     RolesComponent,
     SolicitudesComponent,
     ModificarSolicitudComponent,
-    AgregarmaterialSolicitudComponent
+    CrearCotizacionComponent,
+    ModificarCotizacionComponent
   ],
   imports: [
     CommonModule,
@@ -81,8 +83,9 @@ import { CalendarModule } from 'primeng/calendar';
       { path: 'empleados', component: EmpleadosComponent },
       { path: 'solicitudes', component: SolicitudesComponent },
       { path: 'modificar-solicitud', component: ModificarSolicitudComponent },
-      { path: 'agregarmaterial-solicitud', component: AgregarmaterialSolicitudComponent },
       { path: 'cotizaciones', component: CotizacionesComponent },
+      { path: 'crear-cotizacion', component: CrearCotizacionComponent },
+      { path: 'modificar-cotizacion', component: ModificarCotizacionComponent },
       { path: 'obras', component: ObrasComponent },
       { path: 'crud', component: CrudComponent }
     ])

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Material } from 'src/app/admin/models/materiales';
+import { Cotizacion } from 'src/app/admin/models/cotizacion';
 import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { MaterialService } from 'src/app/admin/service/material.service'
+import { cotizacionservice } from 'src/app/admin/service/cotizacion.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cotizaciones',
@@ -12,15 +13,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CotizacionesComponent implements OnInit {
 
-  MaterialDialog: boolean = false;
+  CotizacionDialog: boolean = false;
 
-  EditarMaterialDialog: boolean = false;
+  EditarCotizacionDialog: boolean = false;
 
-  deleteMaterialDialog: boolean = false;
+  deleteCotizacionDialog: boolean = false;
 
-  deleteMaterialesDialog: boolean = false;
+  deleteCotizacionesDialog: boolean = false;
 
-  selectedMateriales: Material[] = [];
+  selectedCotizaciones: Cotizacion[] = [];
 
   submitted: boolean = false;
 
@@ -29,47 +30,63 @@ export class CotizacionesComponent implements OnInit {
   statuses: any[] = [];
 
   rowsPerPageOptions = [5, 10, 20];
-  Material: Material = {
+  Cotizacion: Cotizacion = {
     _id: '',
-    nombre_material: '',
-    proveedor: '',
-    estado: 0,
-    fecha: new Date()
+    solicitud: '',
+    materiales: '',
+    servicios: '',
+    nombre_cliente: '',
+    servicio: '',
+    cantidad: 0,
+    descripción: '',
+    subtotal: 0,
+    fecha_vencimiento: new Date,
+    mano_obra: 0,
+    total_servicio: 0,
+    estado_cotizacion_cliente: 0,
+    estado_cotizacion: 0,
+    estado_solicitud: 0
   };
 
 
 
-  MaterialsForm!: FormGroup;
+  CotizacionsForm!: FormGroup;
 
-  modificarMaterialForm!: FormGroup;
+  modificarCotizacionForm!: FormGroup;
 
-  Materials: Material[] = [];
+  Cotizacions: Cotizacion[] = [];
 
-  MaterialSeleccionado!: Material;
+  CotizacionSeleccionado!: Cotizacion;
 
   constructor(
-    private materialService: MaterialService,
+    private cotizacionService: cotizacionservice,
     private messageService: MessageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getMaterials();
+    this.getCotizacions();
     this.initForm();
   
 
     this.cols = [
-      { field: 'nombre_Material', header: 'Nombre Material' },
-      { field: 'proveedor', header: 'Proveedor' },
-      { field: 'estado', header: 'Estado' },
-      { field: 'fecha ingreso', header: 'Fecha ingreso' },
-      // { field: 'imagen', header: 'Imagen' }
-
+      { field: 'nombre_cliente', header: 'Nombre Cotizacion' },
+      { field: 'servicio', header: 'Nombre Cotizacion' },
+      { field: 'cantidad', header: 'Nombre Cotizacion' },
+      { field: 'descripción', header: 'Nombre Cotizacion' },
+      { field: 'subtotal', header: 'Nombre Cotizacion' },
+      { field: 'fecha_vencimiento', header: 'fecha_vencimiento' },
+      { field: 'mano_obra', header: 'mano_obra' },
+      { field: 'total_servicio', header: 'total_servicio' },
+      { field: 'estado_cotizacion_cliente', header: 'estado_cotizacion_cliente' },
+      { field: 'estado_cotizacion', header: 'estado_cotizacion' },
+      { field: 'estado_solicitud', header: 'estado_solicitud' },
   ];
 
     this.statuses = [
-      { label: 'Disponible', value: '1' },
-      { label: 'Agotado', value: '0' },
+      { label: 'Activo', value: '1' },
+      { label: 'Inactivo', value: '0' },
     ];
 
  
@@ -77,89 +94,84 @@ export class CotizacionesComponent implements OnInit {
   }
 
   initForm(): void {
-    this.MaterialsForm = this.formBuilder.group({
-      nombre_material: ['', Validators.required],
-      proveedor: ['', Validators.required],
-      estado: ['1', Validators.required],
-      fecha: ['',],
+    this.CotizacionsForm = this.formBuilder.group({
+      nombre_cliente: ['', Validators.required],
+      servicio: ['', Validators.required],
+      cantidad: ['', Validators.required],
+      descripción: ['',],
+      subtotal: ['',],
+      fecha_vencimiento: ['',],
+      mano_obra: ['',],
+      total_servicio: ['',],
+      estado_cotizacion_cliente: ['',],
+      estado_cotizacion: ['',],
+      estado_solicitud: ['',]
     });
   }
 
-  saveMaterial(): void {
+  saveCotizacion(): void {
     this.submitted = true;
 
   
-    if (this.MaterialsForm.invalid) {
+    if (this.CotizacionsForm.invalid) {
       return;
     }
   
-    const formData = this.MaterialsForm.value;
+    const formData = this.CotizacionsForm.value;
   
    
   
-    this.materialService.saveMaterial(formData).subscribe(
+    this.cotizacionService.saveCotizacion(formData).subscribe(
       (response) => {
-        console.log('Material registrado exitosamente:', response);
-        this.getMaterials();
+        console.log('Cotizacion registrado exitosamente:', response);
+        this.getCotizacions();
         this.messageService.add({
           severity: 'success',
           summary: 'Guardado exitoso',
           detail: 'Registrado correctamente',
           life: 3000,
         });
-        this.MaterialDialog = false;
+        this.CotizacionDialog = false;
       },
       (error) => {
-        console.log('Error al registrar el Material:', error);
+        console.log('Error al registrar el Cotizacion:', error);
       }
     );
   }
   
-  updateMaterial(): void {
+  updateCotizacion(): void {
     this.submitted = true;
 
  
-    const formData = this.MaterialsForm.value;
+    const formData = this.CotizacionsForm.value;
 
-    formData.id_Material = this.MaterialSeleccionado._id; // Agrega el ID del Material al formulario
+    formData.id_Cotizacion = this.CotizacionSeleccionado._id; // Agrega el ID del Cotizacion al formulario
 
-    this.materialService.updateMaterial(formData.id_Material, formData).subscribe(
+    this.cotizacionService.updateCotizacion(formData.id_Cotizacion, formData).subscribe(
       (response) => {
-        console.log('Material actualizado exitosamente:', response);
-        this.getMaterials();
+        console.log('Cotizacion actualizado exitosamente:', response);
+        this.getCotizacions();
         this.messageService.add({
           severity: 'success',
           summary: 'Actualización exitosa',
-          detail: 'Material actualizado correctamente',
+          detail: 'Cotizacion actualizado correctamente',
           life: 3000,
         });
-        this.EditarMaterialDialog = false;
+        this.EditarCotizacionDialog = false;
       },
       (error) => {
-        console.log('Error al actualizar el Material:', error);
+        console.log('Error al actualizar el Cotizacion:', error);
       }
     );
   }
 
 
+  getCotizacions(): void {
+    this.cotizacionService.getCotizaciones().subscribe(
+      (Cotizaciones: Cotizacion[]) => {
+        this.Cotizacions = Cotizaciones;
 
-
-  // getMaterials(): void {
-  //   this.materialService.getMaterial().subscribe(
-  //     (response: Material[]) => {
-  //       this.Materials = response;
-  //     },
-  //     (error) => {
-  //       console.log('Error al obtener los Materials:', error);
-  //     }
-  //   );
-  // }
-
-
-  getMaterials(): void {
-    this.materialService.getMaterial().subscribe(
-      (materiales: Material[]) => {
-        this.Materials = materiales;
+        console.log(this.Cotizacions)
       },
       (error) => {
         console.log('Error al obtener los empleados:', error);
@@ -170,78 +182,93 @@ export class CotizacionesComponent implements OnInit {
 
   openNew() {
     this.submitted = false;
-    this.MaterialDialog = true;
-    this.MaterialsForm.reset();
+    this.CotizacionDialog = true;
+    this.CotizacionsForm.reset();
+
+    this.router.navigate(['/admin/crear-cotizacion']);
+
   }
 
-  deleteselectedMateriales() {
-    this.deleteMaterialesDialog = true;
+  deleteselectedCotizaciones() {
+    this.deleteCotizacionesDialog = true;
   }
 
-  editMaterial(Material: Material) {
-    if (Material) {
-      this.MaterialSeleccionado = Material;
-      this.MaterialsForm.patchValue({
-        nombre_material: Material.nombre_material,
-        proveedor: Material.proveedor,
-        estado: Material.estado
-        
+  editCotizacion(Cotizacion: Cotizacion) {
+    if (Cotizacion) {
+      this.CotizacionSeleccionado = Cotizacion;
+      this.CotizacionsForm.patchValue({
+        nombre_cliente: Cotizacion.nombre_cliente,
+        servicio: Cotizacion.servicio,
+        cantidad: Cotizacion.cantidad,
+        descripción: Cotizacion.descripción,
+        subtotal: Cotizacion.subtotal,
+        fecha_vencimiento: Cotizacion.fecha_vencimiento,
+        mano_obra: Cotizacion.mano_obra,
+        total_servicio: Cotizacion.total_servicio,
+        estado_cotizacion_cliente: Cotizacion.estado_cotizacion_cliente,
+        estado_cotizacion: Cotizacion.estado_cotizacion,
+        estado_solicitud: Cotizacion.estado_solicitud
       });
+
+
       this.submitted = false;
-      this.EditarMaterialDialog = true; // Utiliza la propiedad correcta
+      this.EditarCotizacionDialog = true; // Utiliza la propiedad correcta
+      
+      this.router.navigate(['/admin/modificar-cotizacion']);
+
     }
   }
 
 
-  deleteMaterial(Material: Material) {
-    this.MaterialSeleccionado = Material;
-    this.deleteMaterialDialog = true;
+  deleteCotizacion(Cotizacion: Cotizacion) {
+    this.CotizacionSeleccionado = Cotizacion;
+    this.deleteCotizacionDialog = true;
   }
 
   confirmDelete() {
     if (
-      this.MaterialSeleccionado &&
-      typeof this.MaterialSeleccionado._id === 'string'
+      this.CotizacionSeleccionado &&
+      typeof this.CotizacionSeleccionado._id === 'string'
     ) {
-      this.deleteMaterialDialog = false;
+      this.deleteCotizacionDialog = false;
 
-      this.materialService.deleteMaterial(this.MaterialSeleccionado._id).subscribe(
+      this.cotizacionService.deleteCotizacion(this.CotizacionSeleccionado._id).subscribe(
         (response) => {
-          console.log('Material eliminado exitosamente:', response);
-          this.getMaterials();
+          console.log('Cotizacion eliminado exitosamente:', response);
+          this.getCotizacions();
         },
         (error) => {
-          console.log('Error al eliminar el Material:', error);
+          console.log('Error al eliminar el Cotizacion:', error);
         }
       );
 
       this.messageService.add({
         severity: 'success',
         summary: 'Acción exitosa',
-        detail: 'Material eliminado',
+        detail: 'Cotizacion eliminado',
         life: 3000,
       });
     }
   }
 
   confirmDeleteSelected() {
-    this.deleteMaterialDialog = false;
+    this.deleteCotizacionDialog = false;
 
-    this.Materials = this.Materials.filter(val => !this.selectedMateriales.includes(val)); //Elimina los productos seleccionados del array products 
+    this.Cotizacions = this.Cotizacions.filter(val => !this.selectedCotizaciones.includes(val)); //Elimina los productos seleccionados del array products 
     
-    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Materiales eliminados', life: 3000 });
+    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Cotizaciones eliminados', life: 3000 });
     
-    this.selectedMateriales = []; //indica que ya no hay productos seleccionados para eliminar
+    this.selectedCotizaciones = []; //indica que ya no hay productos seleccionados para eliminar
 
 }
 
-  seleccionarMaterial(Material: Material) {
-    this.MaterialSeleccionado = Material;
+  seleccionarCotizacion(Cotizacion: Cotizacion) {
+    this.CotizacionSeleccionado = Cotizacion;
   }
 
   hideDialog() {
-    this.MaterialDialog = false;
-    this.EditarMaterialDialog = false; // Asegúrate de ocultar la ventana modal de edición también
+    this.CotizacionDialog = false;
+    this.EditarCotizacionDialog = false; // Asegúrate de ocultar la ventana modal de edición también
     this.submitted = false;
   }
 
