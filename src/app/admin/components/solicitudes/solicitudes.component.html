@@ -73,30 +73,46 @@
           </ng-template>
           <ng-template pTemplate="header">
             <tr>
-              <th style="width: 3rem">
+              <!-- <th style="width: 3rem">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-              </th>
-              <th>Nombre cliente</th>
+              </th> -->
+              <!-- Administrador -->
+              <th *ngIf="userRol == '649c4e46ef2c0bda10cf8322'">Nombre cliente</th> 
+              <th>Servicio</th>
+              <th>Cantidad</th>
+              <th>Descripción</th>
               <th pSortableColumn="estado">Estado</th>
-              <th>Fecha de envío</th>
+              <th>Fecha</th>
               <th></th>
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-Solicitud>
             <tr>
-              <td>
+              <!-- <td>
                 <p-tableCheckbox
                   [value]="Solicitud"
                   binary="true"
                 ></p-tableCheckbox>
-              </td>
-              <td style="width: 14%; min-width: 10rem">
+              </td> -->
+              <td style="width: 14%; min-width: 10rem" *ngIf="userRol == '649c4e46ef2c0bda10cf8322'">
                 <span class="p-column-title">nombre_cliente</span>
                 {{ Solicitud.nombre_cliente }}
               </td>
+              <td style="width: 14%; min-width: 8rem">
+                <span class="p-column-title">servicio</span>
+                {{ Solicitud.servicio }}
+              </td>
+              <td style="width: 14%; min-width: 8rem">
+                <span class="p-column-title">cantidad</span>
+                {{ Solicitud.cantidad }}
+              </td>
+              <td style="width: 14%; min-width: 8rem">
+                <span class="p-column-title">descripcion</span>
+                {{ Solicitud.descripcion }}
+              </td>
               <td style="width: 14%; min-width: 10rem">
                 <span class="p-column-title">Estado</span>
-                <span [class]="'Solicitud-badge status-' + (Solicitud.estado ? Solicitud.estado.toString().toLowerCase() : '')">{{ Solicitud.estado === 1 ? "Disponible" : "Agotado"}}</span>
+                <span [class]="'Solicitud-badge status-' + (Solicitud.estado ? Solicitud.estado.toString().toLowerCase() : '')">{{ Solicitud.estado === 1 ? "Activo" : "Inactivo"}}</span>
               </td>
               <td style="width: 14%; min-width: 8rem">
                 <span class="p-column-title">fecha_envio</span>
@@ -190,5 +206,9 @@
         </ng-template>
       </p-dialog>
     </div>
-  </div>
-  
+</div>
+
+
+
+
+

@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 
 //primeNg
+import { ListboxModule } from 'primeng/listbox';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -20,6 +21,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DialogModule } from 'primeng/dialog';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 
 
 import { CrudComponent } from './components/crud/crud.component';
@@ -37,7 +39,8 @@ import { ModificarSolicitudComponent } from './components/modificar-solicitud/mo
 import { CalendarModule } from 'primeng/calendar';
 import { CrearCotizacionComponent } from './components/crear-cotizacion/crear-cotizacion.component';
 import { ModificarCotizacionComponent } from './components/modificar-cotizacion/modificar-cotizacion.component';
-
+import { ServiciosObraComponent } from './components/servicios-obra/servicios-obra.component';
+import { CrearSolicitudComponent } from './components/crear-solicitud/crear-solicitud.component';
 
 @NgModule({
   declarations: [
@@ -53,10 +56,14 @@ import { ModificarCotizacionComponent } from './components/modificar-cotizacion/
     SolicitudesComponent,
     ModificarSolicitudComponent,
     CrearCotizacionComponent,
-    ModificarCotizacionComponent
+    ModificarCotizacionComponent,
+    ServiciosObraComponent,
+    CrearSolicitudComponent
   ],
   imports: [
     CommonModule,
+    AutoCompleteModule,
+    ListboxModule,
     CalendarModule,
     TableModule,
     ReactiveFormsModule,
@@ -82,11 +89,13 @@ import { ModificarCotizacionComponent } from './components/modificar-cotizacion/
       { path: 'materiales', component: MaterialesComponent },
       { path: 'empleados', component: EmpleadosComponent },
       { path: 'solicitudes', component: SolicitudesComponent },
+      { path: 'crear-solicitud', component: CrearSolicitudComponent },
       { path: 'modificar-solicitud', component: ModificarSolicitudComponent },
       { path: 'cotizaciones', component: CotizacionesComponent },
       { path: 'crear-cotizacion', component: CrearCotizacionComponent },
       { path: 'modificar-cotizacion', component: ModificarCotizacionComponent },
       { path: 'obras', component: ObrasComponent },
+      { path: 'servicios-obra', component: ServiciosObraComponent },
       { path: 'crud', component: CrudComponent }
     ])
   ]

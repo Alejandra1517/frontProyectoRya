@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { CommonModule, DatePipe, HashLocationStrategy, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppLayoutModule } from './layout/app.layout.module';
@@ -26,6 +26,7 @@ import { Obraservice } from './admin/service/obra.service';
         AppComponent
     ],
     imports: [
+        CommonModule,
         AppRoutingModule,
         AppLayoutModule,
         RouterModule.forRoot([], { useHash: false }) // Utiliza useHash: false para enrutamiento basado en HTML5
@@ -33,7 +34,8 @@ import { Obraservice } from './admin/service/obra.service';
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy  },
         ProductService, ClienteService, ServicioServiceService, EmpleadoService, UsuarioService, RolService,LoginServiceService, Solicitudeservice, cotizacionservice, Obraservice,
-        authInterceptorProviders, MaterialService, MessageService, AdminGuard
+        authInterceptorProviders, MaterialService, MessageService, AdminGuard, DatePipe
+
 
     ],
     bootstrap: [AppComponent]

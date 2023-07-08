@@ -18,8 +18,6 @@ export class AppMenuComponent implements OnInit {
     const user = this.loginService.getUser();
   
 
-    console.log(user)
-
     const userPermissions = [
       user.configuracion,
       user.usuarios,
@@ -31,8 +29,6 @@ export class AppMenuComponent implements OnInit {
       user.cotizaciones,
       user.obras
     ];
-  
-    console.log(userPermissions)
 
     this.model = [
       {

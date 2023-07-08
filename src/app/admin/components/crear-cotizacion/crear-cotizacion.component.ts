@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { Solicitud } from 'src/app/admin/models/solicitud';
 import { MessageService } from 'primeng/api';
@@ -34,17 +33,30 @@ export class CrearCotizacionComponent implements OnInit {
   rowsPerPageOptions = [5, 10, 20];
   Solicitud: Solicitud = {
     _id: '',
-    asunto_solicitud: '',
     nombre_cliente: '',
     categoria_servicio: 0,
-    servicio: '',
     cantidad: 0,
     descripción: '',
     estado_solicitud: 0,
-    fecha_envio: 0
+    servicios: [],
+    fecha_envio: ''
   };
 
 
+  serviciosNames: { [key: string]: string } = {};
+
+
+  servicios: any[] = [];
+  
+  selectedServicio: any;
+
+
+  onRolChange(event: any) {
+    this.selectedServicio = event.value;
+    this.SolicitudesForm.patchValue({ servicios: this.selectedServicio.nombre_servicio });
+    console.log('hello', this.selectedServicio)
+  }
+  
 
   SolicitudesForm!: FormGroup;
 
@@ -186,10 +198,8 @@ export class CrearCotizacionComponent implements OnInit {
     if (Solicitud) {
       this.SolicitudSeleccionado = Solicitud;
       this.SolicitudesForm.patchValue({
-        asunto_solicitud: Solicitud.asunto_solicitud,
         nombre_cliente: Solicitud.nombre_cliente,
         categoria_servicio: Solicitud.categoria_servicio,
-        servicio: Solicitud.servicio,
         cantidad: Solicitud.cantidad,
         descripción: Solicitud.descripción,
         estado_solicitud: Solicitud.estado_solicitud,

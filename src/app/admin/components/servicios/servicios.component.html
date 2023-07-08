@@ -26,7 +26,6 @@
         </ng-template>
 
         <ng-template pTemplate="right">
-          <!-- <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload> -->
           <button
             pButton
             pRipple
@@ -34,7 +33,6 @@
             icon="pi pi-upload"
             class="p-button-help"
           ></button>
-          <!--(click)="dt.exportCSV()-->
         </ng-template>
       </p-toolbar>
 
@@ -253,16 +251,17 @@
                 Este campo es obligatorio.
               </div>
             </div>
+            
+          <p-fileUpload
+          mode="basic"
+          accept="image/*"
+          [maxFileSize]="1000000"
+          label="Importar imagen"
+          chooseLabel="Seleccionar imagen"
+          class="mr-2 inline-block"
+          (change)="handleImageUpload()"
+        ></p-fileUpload>
 
-            <p-fileUpload
-            mode="basic"
-            accept="image/*"
-            [maxFileSize]="1000000"
-            label="Importar imagen"
-            chooseLabel="Seleccionar imagen"
-            class="mr-2 inline-block"
-            (onUpload)="handleImageUpload($event)"
-          ></p-fileUpload>
           </div>
 
           <div class="field">
@@ -383,16 +382,6 @@
                 placeholder="Seleccionar estado"
               ></p-dropdown>
             </div>
-
-            <p-fileUpload
-            mode="basic"
-            accept="image/*"
-            [maxFileSize]="1000000"
-            label="Importar imagen"
-            chooseLabel="Seleccionar imagen"
-            class="mr-2 inline-block"
-            (onUpload)="handleImageUpload($event)"
-          ></p-fileUpload>
           </div>
 
           <div class="field">

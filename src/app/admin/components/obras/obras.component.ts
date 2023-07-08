@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { MaterialService } from 'src/app/admin/service/material.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-obras',
@@ -50,7 +51,8 @@ export class ObrasComponent implements OnInit {
   constructor(
     private materialService: MaterialService,
     private messageService: MessageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -144,18 +146,6 @@ export class ObrasComponent implements OnInit {
 
 
 
-  // getMaterials(): void {
-  //   this.materialService.getMaterial().subscribe(
-  //     (response: Material[]) => {
-  //       this.Materials = response;
-  //     },
-  //     (error) => {
-  //       console.log('Error al obtener los Materials:', error);
-  //     }
-  //   );
-  // }
-
-
   getMaterials(): void {
     this.materialService.getMaterial().subscribe(
       (materiales: Material[]) => {
@@ -172,6 +162,9 @@ export class ObrasComponent implements OnInit {
     this.submitted = false;
     this.MaterialDialog = true;
     this.MaterialsForm.reset();
+
+    this.router.navigate(['/admin/servicios-obra']);
+
   }
 
   deleteselectedMateriales() {

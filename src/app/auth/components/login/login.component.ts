@@ -77,11 +77,11 @@ export class LoginComponent implements OnInit {
             this.loginService.setUser(user);
             console.log(user);
 
-            if (this.loginService.getUserRole() === '649c4e46ef2c0bda10cf8322') {
+            if (this.loginService.getUserRole() === '64a7e46450d24006928a54a1') {
               console.log("Administrador");
               this.router.navigate(['/']);
               this.loginService.loginStatusSubject.next(true);
-            } else if (this.loginService.getUserRole() === '649c15b61bd2c95b8ec5132b') {
+            } else if (this.loginService.getUserRole() === '64a7e49050d24006928a54a3') {
               console.log("Cliente");
               this.router.navigate(['/']);
               this.loginService.loginStatusSubject.next(true);

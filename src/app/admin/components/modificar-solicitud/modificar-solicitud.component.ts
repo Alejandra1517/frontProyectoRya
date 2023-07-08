@@ -32,14 +32,13 @@ export class ModificarSolicitudComponent implements OnInit {
   rowsPerPageOptions = [5, 10, 20];
   Solicitud: Solicitud = {
     _id: '',
-    asunto_solicitud: '',
     nombre_cliente: '',
     categoria_servicio: 0,
-    servicio: '',
     cantidad: 0,
     descripción: '',
     estado_solicitud: 0,
-    fecha_envio: 0
+    servicios: [],
+    fecha_envio: ''
   };
 
 
@@ -88,7 +87,7 @@ export class ModificarSolicitudComponent implements OnInit {
 
   initForm(): void {
     this.SolicitudesForm = this.formBuilder.group({
-      asunto_solicitud:  ['', Validators.required],
+      servicios:  ['', Validators.required],
       nombre_cliente:  ['', Validators.required],
       categoria_servicio:  ['1', Validators.required],
       servicio:  ['', Validators.required],
@@ -184,10 +183,10 @@ export class ModificarSolicitudComponent implements OnInit {
     if (Solicitud) {
       this.SolicitudSeleccionado = Solicitud;
       this.SolicitudesForm.patchValue({
-        asunto_solicitud: Solicitud.asunto_solicitud,
+        servicios: Solicitud.servicios,
         nombre_cliente: Solicitud.nombre_cliente,
         categoria_servicio: Solicitud.categoria_servicio,
-        servicio: Solicitud.servicio,
+        // servicio: Solicitud.servicio,
         cantidad: Solicitud.cantidad,
         descripción: Solicitud.descripción,
         estado_solicitud: Solicitud.estado_solicitud,

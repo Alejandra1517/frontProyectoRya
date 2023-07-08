@@ -5,47 +5,54 @@ import { Table } from 'primeng/table';
 import { Solicitudeservice } from 'src/app/admin/service/solicitud.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginServiceService } from 'src/app/auth/service/login.service.service';
+// import {  DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 
 @Component({
   selector: 'app-solicitudes',
   templateUrl: './solicitudes.component.html',
-  styleUrls: ['./solicitudes.component.scss']
+  styleUrls: ['./solicitudes.component.scss'],
+  // providers: [DialogService, DynamicDialogConfig]
 })
 export class SolicitudesComponent implements OnInit {
-
+  
+  
+  
   SolicitudDialog: boolean = false;
-
+  
   EditarSolicitudDialog: boolean = false;
-
+  
   deleteSolicitudDialog: boolean = false;
 
   deleteSolicitudesDialog: boolean = false;
-
+  
   selectedSolicitudes: Solicitud[] = [];
-
+  
   submitted: boolean = false;
-
+  
   cols: any[] = [];
-
+  
   statuses: any[] = [];
-
+  
+  userRol: any;
+  
   rowsPerPageOptions = [5, 10, 20];
   Solicitud: Solicitud = {
     _id: '',
-    asunto_solicitud: '',
+    servicios: [],
     nombre_cliente: '',
     categoria_servicio: 0,
-    servicio: '',
     cantidad: 0,
     descripción: '',
     estado_solicitud: 0,
-    fecha_envio: 0
+    fecha_envio: ''
   };
 
-
-
+  
+  
   SolicitudesForm!: FormGroup;
-
+  
   modificarSolicitudForm!: FormGroup;
 
   Solicituds: Solicitud[] = [];
@@ -54,12 +61,25 @@ export class SolicitudesComponent implements OnInit {
 
   constructor(
     private solicitudService: Solicitudeservice,
+    public loginService: LoginServiceService,
     private messageService: MessageService,
     private formBuilder: FormBuilder,
+    // public dialogService: DialogService,
+    // public config: DynamicDialogConfig,
     private router: Router
-  ) {}
+    ) {}
+
+    // ref: DynamicDialogRef | undefined;
+
 
   ngOnInit(): void {
+
+    this.userRol = this.loginService.getUserRole();
+  
+    // this.SolicitudesForm.patchValue({ nombre_cliente: user });
+
+    console.log("hola ", this.userRol)
+
     this.getSolicitudes();
     this.initForm();
   
@@ -72,7 +92,6 @@ export class SolicitudesComponent implements OnInit {
       { field: 'descripción', header: 'descripción' },
       { field: 'estado_solicitud', header: 'estado_solicitud' },
       { field: 'fecha_envio', header: 'fecha_envio' }
-
   ];
 
     this.statuses = [
@@ -88,8 +107,9 @@ export class SolicitudesComponent implements OnInit {
 
   initForm(): void {
     this.SolicitudesForm = this.formBuilder.group({
-      asunto_solicitud:  ['', Validators.required],
-      nombre_cliente:  ['', Validators.required],
+      servicios:  ['', Validators.required],
+      // nombre_cliente:  [this.config.data.nombre_cliente, Validators.required],
+      nombre_cliente:  ['hola desde nombre cliente', Validators.required],
       categoria_servicio:  ['1', Validators.required],
       servicio:  ['', Validators.required],
       cantidad:  ['', Validators.required],
@@ -99,6 +119,9 @@ export class SolicitudesComponent implements OnInit {
       
     });
   }
+
+
+
 
   saveSolicitud(): void {
     this.submitted = true;
@@ -130,6 +153,7 @@ export class SolicitudesComponent implements OnInit {
     );
   }
   
+
   updateSolicitud(): void {
     this.submitted = true;
 
@@ -174,32 +198,40 @@ export class SolicitudesComponent implements OnInit {
     this.submitted = false;
     this.SolicitudDialog = true;
     this.SolicitudesForm.reset();
+
+    this.router.navigate(['/admin/crear-solicitud']);
+
   }
 
   deleteselectedSolicitudes() {
     this.deleteSolicitudesDialog = true;
   }
 
+
+
   editSolicitud(Solicitud: Solicitud) {
-    if (Solicitud) {
-      this.SolicitudSeleccionado = Solicitud;
-      this.SolicitudesForm.patchValue({
-        asunto_solicitud: Solicitud.asunto_solicitud,
-        nombre_cliente: Solicitud.nombre_cliente,
-        categoria_servicio: Solicitud.categoria_servicio,
-        servicio: Solicitud.servicio,
-        cantidad: Solicitud.cantidad,
-        descripción: Solicitud.descripción,
-        estado_solicitud: Solicitud.estado_solicitud,
-        fecha_envio: Solicitud.fecha_envio
-      });
-      this.submitted = false;
-      this.EditarSolicitudDialog = true; // Utiliza la propiedad correcta
 
-      this.router.navigate(['/admin/modificar-solicitud']);
 
-    }
-  }
+        this.router.navigate(['/admin/modificar-solicitud']);
+
+      }
+
+  
+
+  
+
+//   show() {
+//     this.ref = this.dialogService.open(CrearSolicitudComponent, {
+//         header: 'Solicitud',
+//         width: '70%',
+//         contentStyle: { overflow: 'auto' },
+//         baseZIndex: 10000,
+//         maximizable: true,
+//         // data: data // Pasar los datos al Dynamic Dialog
+//     });
+
+    
+// }
 
 
   deleteSolicitud(Solicitud: Solicitud) {
@@ -258,4 +290,11 @@ export class SolicitudesComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
+
+
+
+
+
+
 }

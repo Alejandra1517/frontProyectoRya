@@ -25,7 +25,7 @@ export class ServiciosComponent implements OnInit {
   categorias: any[] = [];
   rowsPerPageOptions = [5, 10, 20];
   Servicio: Servicio = {
-    _id: '',
+    servicios: '',
     nombre_servicio: '',
     categoria: 0,
     valor_unitario: 0,
@@ -44,28 +44,7 @@ export class ServiciosComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
-  
 
-  handleImageUpload(event: any) {
-    const file = event.files[0];
-    // Aquí puedes acceder a los detalles de la imagen cargada, como el nombre, tamaño, tipo, etc.
-    console.log('Detalles de la imagen cargada:', file);
-
-
-    const formData = new FormData();
-    formData.append('image', file);
-  
-    fetch('/api/postServicio', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => {
-      // Manejar la respuesta del servidor aquí
-    })
-    .catch(error => {
-      // Manejar el error aquí
-    });
-  }
   
 
 
@@ -108,39 +87,96 @@ export class ServiciosComponent implements OnInit {
     });
   }
 
-  saveServicio(): void {
-    this.submitted = true;
-    // this.Servicio.imagen = 'product-placeholder.svg';
+  // saveServicio(): void {
+  //   this.submitted = true;
+  //   // this.Servicio.imagen = 'product-placeholder.svg';
   
-    if (this.ServiciosForm.invalid) {
-      return;
-    }
+  //   if (this.ServiciosForm.invalid) {
+  //     return;
+  //   }
   
-    const formData = this.ServiciosForm.value;
+  //   const formData = this.ServiciosForm.value;
   
-    if (!formData.descripcion) {
-      formData.descripcion = 'Sin descripción';
-    }
+  //   if (!formData.descripcion) {
+  //     formData.descripcion = 'Sin descripción';
+  //   }
     
 
 
-    this.servicioServiceService.saveServicio(formData).subscribe(
-      (response) => {
-        console.log('Servicio registrado exitosamente:', response);
-        this.getServicios();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Guardado exitoso',
-          detail: 'Registrado correctamente',
-          life: 3000,
-        });
-        this.ServicioDialog = false;
-      },
-      (error) => {
-        console.log('Error al registrar el Servicio:', error);
-      }
-    );
+  //   this.servicioServiceService.saveServicio(formData).subscribe(
+  //     (response) => {
+  //       console.log('Servicio registrado exitosamente:', response);
+  //       this.getServicios();
+  //       this.messageService.add({
+  //         severity: 'success',
+  //         summary: 'Guardado exitoso',
+  //         detail: 'Registrado correctamente',
+  //         life: 3000,
+  //       });
+  //       this.ServicioDialog = false;
+  //     },
+  //     (error) => {
+  //       console.log('Error al registrar el Servicio:', error);
+  //     }
+  //   );
+  // }
+
+
+  handleImageUpload(): Promise<File> {
+    return new Promise((resolve, reject) => {
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.accept = 'image/*';
+  
+      fileInput.onchange = (event: any) => {
+        const file = event.target.files[0];
+        resolve(file);
+      };
+  
+      fileInput.click();
+    });
   }
+  
+  saveServicio(): void {
+    this.submitted = true;
+    if (this.ServiciosForm.invalid) {
+      return;
+    }
+
+    
+  
+    this.handleImageUpload().then((file) => {
+      const request = {
+        servicios: this.ServiciosForm.value.nombre_servicio,
+        descripcion: this.ServiciosForm.value.categoria,
+        categoria: this.ServiciosForm.value.categoria,
+        valor_unitario: this.ServiciosForm.value.valor_unitario,
+        estado: this.ServiciosForm.value.estado,
+        nombre_servicio: this.ServiciosForm.value.nombre_servicio,
+      };
+  
+      this.servicioServiceService.saveServicio(request, file).subscribe(
+        (response) => {
+          console.log('Servicio registrado exitosamente:', response);
+          this.getServicios();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Guardado exitoso',
+            detail: 'Registrado correctamente',
+            life: 3000,
+          });
+          this.ServicioDialog = false;
+        },
+        (error) => {
+          console.log('Error al registrar el Servicio:', error);
+        }
+      );
+    }).catch((error) => {
+      console.log('Error al cargar la imagen:', error);
+    });
+  }
+  
+  
   
   updateServicio(): void {
     this.submitted = true;
@@ -148,7 +184,7 @@ export class ServiciosComponent implements OnInit {
  
     const formData = this.ServiciosForm.value;
 
-    formData.id_Servicio = this.ServicioSeleccionado._id; // Agrega el ID del Servicio al formulario
+    formData.id_Servicio = this.ServicioSeleccionado.servicios; // Agrega el ID del Servicio al formulario
 
 
     this.servicioServiceService.updateServicio(formData.id_Servicio, formData).subscribe(
@@ -231,11 +267,11 @@ export class ServiciosComponent implements OnInit {
   confirmDelete() {
     if (
       this.ServicioSeleccionado &&
-      typeof this.ServicioSeleccionado._id === 'string'
+      typeof this.ServicioSeleccionado.servicios === 'string'
     ) {
       this.deleteServicioDialog = false;
 
-      this.servicioServiceService.deleteServicio(this.ServicioSeleccionado._id).subscribe(
+      this.servicioServiceService.deleteServicio(this.ServicioSeleccionado.servicios).subscribe(
         (response) => {
           console.log('Servicio eliminado exitosamente:', response);
           this.getServicios();

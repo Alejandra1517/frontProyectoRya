@@ -26,7 +26,7 @@ export class Solicitudeservice {
       return this.httpClient.post<any>(this.URL_API + '/postSolicitud', request).pipe(map(resp => resp));
     }
   
-    updateSolicitud(id_Solicitud: number, request: any): Observable<any> {
+    updateSolicitud(id_Solicitud: string, request: any): Observable<any> {
       const url = `${this.URL_API}/putSolicitud/${id_Solicitud}`;
       return this.httpClient.put<any>(url, request).pipe(map(resp => resp));
     }

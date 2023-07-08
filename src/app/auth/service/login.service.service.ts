@@ -71,11 +71,4 @@ export class LoginServiceService {
   }
 
 
-
-  // public getRoleById(roleId: string) {
-  //   return this.http.get(`${baserUrl}/roles/${roleId}`);
-  // }
-  
-
-
 }

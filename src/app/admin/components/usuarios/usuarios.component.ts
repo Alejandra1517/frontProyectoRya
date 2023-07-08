@@ -195,16 +195,7 @@ export class UsuariosComponent implements OnInit{
     );
   }
 
-  // getUsuarios(): void {
-  //   this.usuarioService.getUsuarios().subscribe(
-  //     (response: Usuario[]) => {
-  //       this.Usuarios = response;
-  //     },
-  //     (error) => {
-  //       console.log('Error al obtener los usuarios:', error);
-  //     }
-  //   );
-  // }
+
 
   getUsuarios(): void {
     
@@ -242,6 +233,7 @@ export class UsuariosComponent implements OnInit{
         direccion: usuario.direccion,
         password: usuario.password,
         estado: usuario.estado,
+        id_rol: usuario.id_rol
       });
       this.submitted = false;
       this.EditarUsuarioDialog = true; 

@@ -1,6 +1,6 @@
 
 export interface Servicio {
-    _id: string;
+    servicios: string; //id
     descripcion: string;
     categoria: number;
     valor_unitario: number;

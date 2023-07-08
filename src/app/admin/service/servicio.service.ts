@@ -28,11 +28,24 @@ export class ServicioServiceService {
     );
   }
 
-  saveServicio(request: any): Observable<any> {
-    return this.httpClient.post<any>(this.URL_API + '/postServicio', request).pipe(map(resp => resp));
-  }
+  // saveServicio(request: any): Observable<any> {
+  //   return this.httpClient.post<any>(this.URL_API + '/postServicio', request).pipe(map(resp => resp));
+  // }
 
-  updateServicio(id_service: number, request: any): Observable<any> {
+
+  saveServicio(request: any, image: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('request', JSON.stringify(request));
+  
+    return this.httpClient.post<any>(`${this.URL_API}/postServicio`, formData).pipe(
+      map(resp => resp)
+    );
+  }
+  
+
+
+  updateServicio(id_service: string, request: any): Observable<any> {
     const url = `${this.URL_API}/putServicio/${id_service}`;
     return this.httpClient.put<any>(url, request).pipe(map(resp => resp));
   }
