@@ -39,7 +39,7 @@ export class SolicitudesComponent implements OnInit {
   
   rowsPerPageOptions = [5, 10, 20];
   Solicitud: Solicitud = {
-    _id: '',
+    solicitud: '',
     servicios: [],
     nombre_cliente: '',
     categoria_servicio: 0,
@@ -101,8 +101,6 @@ export class SolicitudesComponent implements OnInit {
       { label: 'Enviada', value: '3' },
     ];
 
- 
-
   }
 
   initForm(): void {
@@ -160,7 +158,7 @@ export class SolicitudesComponent implements OnInit {
  
     const formData = this.SolicitudesForm.value;
 
-    formData.id_Solicitud = this.SolicitudSeleccionado._id; // Agrega el ID del Solicitud al formulario
+    formData.id_Solicitud = this.SolicitudSeleccionado.solicitud; // Agrega el ID del Solicitud al formulario
 
     this.solicitudService.updateSolicitud(formData.id_Solicitud, formData).subscribe(
       (response) => {
@@ -240,13 +238,14 @@ export class SolicitudesComponent implements OnInit {
   }
 
   confirmDelete() {
+    
     if (
       this.SolicitudSeleccionado &&
-      typeof this.SolicitudSeleccionado._id === 'string'
-    ) {
-      this.deleteSolicitudDialog = false;
-
-      this.solicitudService.deleteSolicitud(this.SolicitudSeleccionado._id).subscribe(
+      typeof this.SolicitudSeleccionado.solicitud === 'string'
+      ) {
+        this.deleteSolicitudDialog = false;
+        
+      this.solicitudService.deleteSolicitud(this.SolicitudSeleccionado.solicitud).subscribe(
         (response) => {
           console.log('Solicitud eliminado exitosamente:', response);
           this.getSolicitudes();

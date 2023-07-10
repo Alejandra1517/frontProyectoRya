@@ -31,7 +31,7 @@ export class ModificarSolicitudComponent implements OnInit {
 
   rowsPerPageOptions = [5, 10, 20];
   Solicitud: Solicitud = {
-    _id: '',
+    solicitud: '',
     nombre_cliente: '',
     categoria_servicio: 0,
     cantidad: 0,
@@ -135,7 +135,7 @@ export class ModificarSolicitudComponent implements OnInit {
  
     const formData = this.SolicitudesForm.value;
 
-    formData.id_Solicitud = this.SolicitudSeleccionado._id; // Agrega el ID del Solicitud al formulario
+    formData.id_Solicitud = this.SolicitudSeleccionado.solicitud; // Agrega el ID del Solicitud al formulario
 
     this.solicitudService.updateSolicitud(formData.id_Solicitud, formData).subscribe(
       (response) => {
@@ -208,11 +208,11 @@ export class ModificarSolicitudComponent implements OnInit {
   confirmDelete() {
     if (
       this.SolicitudSeleccionado &&
-      typeof this.SolicitudSeleccionado._id === 'string'
+      typeof this.SolicitudSeleccionado.solicitud === 'string'
     ) {
       this.deleteSolicitudDialog = false;
 
-      this.solicitudService.deleteSolicitud(this.SolicitudSeleccionado._id).subscribe(
+      this.solicitudService.deleteSolicitud(this.SolicitudSeleccionado.solicitud).subscribe(
         (response) => {
           console.log('Solicitud eliminado exitosamente:', response);
           this.getSolicitudes();

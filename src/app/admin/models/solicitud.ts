@@ -14,7 +14,7 @@
 // }
 
 export interface Solicitud {
-    _id: string;
+    solicitud: string; //id
     nombre_cliente: string;
     categoria_servicio: number;
     servicios: string[]; // Cambiado a un array de strings

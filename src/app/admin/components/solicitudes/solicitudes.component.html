@@ -78,9 +78,6 @@
               </th> -->
               <!-- Administrador -->
               <th *ngIf="userRol == '649c4e46ef2c0bda10cf8322'">Nombre cliente</th> 
-              <th>Servicio</th>
-              <th>Cantidad</th>
-              <th>Descripción</th>
               <th pSortableColumn="estado">Estado</th>
               <th>Fecha</th>
               <th></th>
@@ -97,18 +94,6 @@
               <td style="width: 14%; min-width: 10rem" *ngIf="userRol == '649c4e46ef2c0bda10cf8322'">
                 <span class="p-column-title">nombre_cliente</span>
                 {{ Solicitud.nombre_cliente }}
-              </td>
-              <td style="width: 14%; min-width: 8rem">
-                <span class="p-column-title">servicio</span>
-                {{ Solicitud.servicio }}
-              </td>
-              <td style="width: 14%; min-width: 8rem">
-                <span class="p-column-title">cantidad</span>
-                {{ Solicitud.cantidad }}
-              </td>
-              <td style="width: 14%; min-width: 8rem">
-                <span class="p-column-title">descripcion</span>
-                {{ Solicitud.descripcion }}
               </td>
               <td style="width: 14%; min-width: 10rem">
                 <span class="p-column-title">Estado</span>

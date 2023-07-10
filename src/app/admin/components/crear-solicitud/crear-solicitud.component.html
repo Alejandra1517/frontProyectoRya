@@ -1,124 +1,39 @@
-<!-- <form [formGroup]="solicitudForm">
-  <div class="p-grid">
-    <div class="p-col-12 p-md-6">
-      <label for="cantidad">Nombre Cliente:</label>
-      <input type="text" formControlName="cantidad" id="cantidad" class="p-inputtext" required>
-    </div>
-    <div class="p-col-12 p-md-6">
-      <label for="categoria_servicio">Categoría Servicio:</label>
-      <input type="text" formControlName="categoria_servicio" id="categoria_servicio" class="p-inputtext" required>
-    </div>
-    <div class="p-col-12 p-md-6">
-      <label for="servicio">Servicio:</label>
-      <p-dropdown formControlName="servicios" [options]="servicios" optionLabel="nombre_servicio" id="servicio" [style]="{'width':'100%'}"></p-dropdown>
-    </div>    
-    <div class="p-col-12 p-md-6">
-      <label for="cantidad">Cantidad:</label>
-      <input type="number" formControlName="cantidad" id="cantidad" class="p-inputtext" required>
-    </div>
-    <div class="p-col-12">
-      <label for="descripcion">Descripción:</label>
-      <textarea formControlName="descripcion" id="descripcion" class="p-inputtext" rows="4" required></textarea>
-    </div>
-    <div class="p-col-12 p-md-6">
-      <label for="estado_solicitud">Estado Solicitud:</label>
-      <input type="text" formControlName="estado_solicitud" id="estado_solicitud" class="p-inputtext" required>
-    </div>
-    <div class="p-col-12 p-md-6">
-      <label for="fecha_envio">Fecha Envío:</label>
-      <input type="date" formControlName="fecha_envio" id="fecha_envio" class="p-inputtext" required>
-    </div>
-  </div>
-
-  <button type="button" pButton label="Agregar Servicio" (click)="agregarServicio()" class="p-button p-button-raised"></button>
-  <button type="button" pButton label="Enviar Solicitud" (click)="enviarSolicitud()" class="p-button p-button-raised"></button>
-</form>
-
-<table class="p-table">
-  <thead>
-    <tr>
-      <th>Servicio</th>
-      <th>Cantidad</th>
-      <th>Descripción</th>
-      <th>Estado Solicitud</th>
-      <th>Fecha Envío</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let servicio of solicitudServicios">
-      <td>{{ servicio.nombre_servicio }}</td>
-      <td>{{ solicitudForm.get('cantidad')?.value }}</td>
-      <td>{{ solicitudForm.get('descripcion')?.value }}</td>
-      <td>{{ solicitudForm.get('estado_solicitud')?.value }}</td>
-      <td>{{ solicitudForm.get('fecha_envio')?.value }}</td>
-    </tr>
-  </tbody>
-</table> -->
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="col-12">
     <div class="card">
       <h5>Crear solicitud</h5>
   
     <div class="card">
         <form [formGroup]="solicitudForm"> <!-- Agregado el formulario aquí -->
-            <div class="grid p-fluid mt-3">
-              <div class="field col-12 md:col-4">
-                <span class="p-float-label">
-                  <div class="form-group">
-                    <p-autoComplete
-                      id="servicio_nombre"
-                      name="servicio_nombre"
-                      placeholder="Servicio"
-                      formControlName="servicio"
-                      [suggestions]="filteredServicios"
-                      (completeMethod)="filterServicios($event)"
-                      field="nombre_servicio"
-                    >
-                    </p-autoComplete>
-                  </div>
-                </span>
-              </div>
-              
-                <div class="field col-12 md:col-4 mb-5">
-                  <span class="p-float-label p-input-icon-right">
-                    <input type="text" id="righticon" pInputText>
-                    <label for="righticon">Otro</label>
-                  </span>
-                </div>
-              </div>
-              
-  
-          <div class="grid p-fluid mt-3">
+        
+          <div class="formgroup-inline mb-3 mt-3">
+          
             <div class="field">
-              <input type="text" placeholder="Cantidad" pInputText id="cantidad" formControlName="cantidad" required autofocus [ngClass]="{'p-invalid': solicitudForm.get('cantidad')?.invalid}" />
-              <div *ngIf="solicitudForm.get('cantidad')?.invalid" class="p-error">
-                Este campo es obligatorio.
+              <p-autoComplete
+              id="servicio_nombre"
+              name="servicio_nombre"
+              placeholder="Servicio"
+              formControlName="servicio"
+              [suggestions]="filteredServicios"
+              (completeMethod)="filterServicios($event)"
+              field="nombre_servicio"
+            >
+            </p-autoComplete>
               </div>
-            </div>
 
-            <div class="field">
-              <input type="text" placeholder="Descripción" pInputText id="descripcion" formControlName="descripcion" required autofocus [ngClass]="{'p-invalid': solicitudForm.get('descripcion')?.invalid}" />
-              <div *ngIf="solicitudForm.get('descripcion')?.invalid" class="p-error">
-                Este campo es obligatorio.
-              </div>
-            </div>
+              <input type="text" placeholder="Cantidad" pInputText id="cantidad" formControlName="cantidad"/>
           </div>
+
+          <div class="formgroup-inline">
+            <div class="field">
+                <textarea rows="5" cols="30" placeholder="Descripción" pInputTextarea id="descripcion" formControlName="descripcion"></textarea>
+            </div>
+        </div>
+  
   
           <p-footer>
             <div class="flex justify-content-end text-end">
               <button pButton pRipple type="button" label="Agregar servicio" (click)="agregarServicio()"  class="mr-2 p-button-info"></button>
-              <button pButton pRipple type="button" label="Volver" class="p-button-secondary"></button>
+              <button pButton pRipple type="button" label="Volver" routerLink="/admin/solicitudes" class="p-button-secondary"></button>
             </div>
           </p-footer>
         </form> <!--Cierre del formulario-->
@@ -142,8 +57,13 @@
                   [showCurrentPageReport]="true"
                   [rowHover]="true"
                   dataKey="id">
+
+
           <ng-template pTemplate="caption">
             <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+              <div class="field">
+                <input type="text" placeholder="Cantidad" pInputText id="cantidad" formControlName="cantidad" required autofocus [ngClass]="{'p-invalid': solicitudForm.get('cantidad')?.invalid}" />
+              </div>
               <span class="block mt-2 md:mt-0 p-input-icon-left">
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" placeholder="Buscar ..." class="w-full sm:w-auto" />
@@ -175,18 +95,19 @@
               <td>
                 <div class="flex">
                   <button
-                    pButton
-                    pRipple
-                    icon="pi pi-pencil"
-                    class="p-button-rounded p-button-success mr-2"
-                  ></button>
-                  <button
-                    pButton
-                    pRipple
-                    icon="pi pi-trash"
-                    class="p-button-rounded p-button-warning"
-                    
-                  ></button>
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-success mr-2"
+                  (click)="editSolicitud(servicio)"
+                ></button>
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-trash"
+                  class="p-button-rounded p-button-warning"
+                  (click)="deleteSolicitud(servicio)"
+                ></button>
                 </div>
               </td>
             </tr>
@@ -200,117 +121,3 @@
           </p-footer>
     </div>
 </div>
-
-
-
-<!-- modificar servicio solicitud -->
-<!-- <p-dialog
-  [(visible)]="EditarSolicitudDialog"
-  [style]="{ width: '480px' }"
-  header="Modificar servicio"
-  [modal]="true"
-  class="p-fluid"
->
-  <ng-template pTemplate="content">
-    <form [formGroup]="SolicitudesForm">
-        <div class="formgroup-inline mb-3">
-          <div class="field">
-              <p-dropdown
-                formControlName="categoria_servicio"
-                id="categoria_servicio"
-                [options]="Solicituds"
-                placeholder="Categoría servicio"
-                [ngClass]="{
-                  'p-invalid':
-                    submitted && SolicitudesForm.get('categoria_servicio')?.invalid
-                }"
-              ></p-dropdown>
-              <div
-                *ngIf="submitted && SolicitudesForm.get('categoria_servicio')?.invalid"
-                class="p-error"
-              >
-                Este campo es obligatorio.
-              </div>
-          </div> -->
-        <!-- <div class="field">
-          <p-dropdown
-            formControlName="servicio"
-            id="servicio"
-            [options]="Solicituds"
-            placeholder="Servicio"
-            [ngClass]="{
-              'p-invalid':
-                submitted && SolicitudesForm.get('servicio')?.invalid
-            }"
-          ></p-dropdown>
-          <div
-            *ngIf="submitted && SolicitudesForm.get('servicio')?.invalid"
-            class="p-error"
-          >
-            Este campo es obligatorio.
-          </div>
-        </div>
-      </div>
-
-      <div class="formgroup-inline mb-3">
-        <div class="field">
-            <p-inputNumber
-            placeholder="cantidad"
-            id="cantidad"
-            formControlName="cantidad"
-          ></p-inputNumber>
-          
-          <div
-            *ngIf="
-              submitted && SolicitudesForm.get('cantidad')?.invalid
-            "
-            class="p-error"
-          >
-            Este campo es obligatorio.
-          </div>
-        </div>
-        
-
-      </div>
-
-      <div class="formgroup-inline mb-3">
-        <div class="field">
-                    <textarea
-                      id="descripcion"
-                      placeholder="Descripción"
-                      pInputTextarea
-                      formControlName="descripcion"
-                      rows="3"
-                      cols="50"
-                    ></textarea>
-        </div>
-
-      </div>
-    </form>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <div class="p-dialog-footer">
-      <button
-        pButton
-        pRipple
-        label="Cancelar"
-        icon="pi pi-times"
-        class="p-button-text"
-        (click)="hideDialog()"
-      ></button>
-      <button
-        pButton
-        pRipple
-        label="Guardar"
-        icon="pi pi-check"
-        class="p-button-text"
-        [disabled]="SolicitudesForm.invalid"
-        (click)="updateSolicitud()"
-      ></button>
-    </div>
-  </ng-template>
-</p-dialog> --> 
-
-
-
-
